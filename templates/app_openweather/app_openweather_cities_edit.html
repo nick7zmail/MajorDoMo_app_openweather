@@ -1,0 +1,428 @@
+
+<!-- Table 'app_openweather_cities' edit -->
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+[#if OK#]
+<div class="alert alert-success"><#LANG_DATA_SAVED#></div>
+[#endif OK#]
+[#if ERR#]
+<div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
+[#endif ERR#]
+<fieldset>
+[#if ID=""#]
+<legend><#LANG_NEW_RECORD#></legend>
+[#endif ID#]
+<!-- TITLE (varchar) -->
+<div class="form-group[#if ERR_TITLE#] has-error[#endif#]">
+ <label for="title" class="col-lg-3 control-label">
+ <#LANG_TITLE#>:
+ </label>
+ <div class="col-lg-9"><input id="title" name="title" value="[#TITLE#]" type="text" class="form-control"></div>
+</div>
+ <div class="form-group">
+  <label for="country" class="col-lg-3 control-label">
+ <#LANG_LOCATION#>:
+ </label>
+
+    <div class="col-sm-4">
+      <select name="country" id="country" class="form-control" onchange="country_change();">
+  		  <option value="">--<#LANG_OW_CHOOSE_COUNTRY#>--</option>
+  		  <option value="AD" [#if COUNTRY="AD"#] selected[#endif#]>Andorra</option>
+  		  <option value="AE" [#if COUNTRY="AE"#] selected[#endif#]>United Arab Emirates</option>
+  		  <option value="AF" [#if COUNTRY="AF"#] selected[#endif#]>Afghanistan</option>
+  		  <option value="AG" [#if COUNTRY="AG"#] selected[#endif#]>Antigua and Barbuda</option>
+  		  <option value="AI" [#if COUNTRY="AI"#] selected[#endif#]>Anguilla</option>
+  		  <option value="AL" [#if COUNTRY="AL"#] selected[#endif#]>Albania</option>
+  		  <option value="AM" [#if COUNTRY="AM"#] selected[#endif#]>Armenia</option>
+  		  <option value="AO" [#if COUNTRY="AO"#] selected[#endif#]>Angola</option>
+  		  <option value="AR" [#if COUNTRY="AR"#] selected[#endif#]>Argentina</option>
+  		  <option value="AS" [#if COUNTRY="AS"#] selected[#endif#]>American Samoa</option>
+  		  <option value="AT" [#if COUNTRY="AT"#] selected[#endif#]>Austria</option>
+  		  <option value="AU" [#if COUNTRY="AU"#] selected[#endif#]>Australia</option>
+  		  <option value="AW" [#if COUNTRY="AW"#] selected[#endif#]>Aruba</option>
+  		  <option value="AX" [#if COUNTRY="AX"#] selected[#endif#]>Åland Islands</option>
+  		  <option value="AZ" [#if COUNTRY="AZ"#] selected[#endif#]>Azerbaijan</option>
+  		  <option value="BA" [#if COUNTRY="BA"#] selected[#endif#]>Bosnia and Herzegovina</option>
+  		  <option value="BB" [#if COUNTRY="BB"#] selected[#endif#]>Barbados</option>
+  		  <option value="BD" [#if COUNTRY="BD"#] selected[#endif#]>Bangladesh</option>
+  		  <option value="BE" [#if COUNTRY="BE"#] selected[#endif#]>Belgium</option>
+  		  <option value="BF" [#if COUNTRY="BF"#] selected[#endif#]>Burkina Faso</option>
+  		  <option value="BG" [#if COUNTRY="BG"#] selected[#endif#]>Bulgaria</option>
+  		  <option value="BH" [#if COUNTRY="BH"#] selected[#endif#]>Bahrain</option>
+  		  <option value="BI" [#if COUNTRY="BI"#] selected[#endif#]>Burundi</option>
+  		  <option value="BJ" [#if COUNTRY="BJ"#] selected[#endif#]>Benin</option>
+  		  <option value="BL" [#if COUNTRY="BL"#] selected[#endif#]>Saint Barthelemy</option>
+  		  <option value="BM" [#if COUNTRY="BM"#] selected[#endif#]>Bermuda</option>
+  		  <option value="BN" [#if COUNTRY="BN"#] selected[#endif#]>Brunei</option>
+  		  <option value="BO" [#if COUNTRY="BO"#] selected[#endif#]>Bolivia</option>
+  		  <option value="BQ" [#if COUNTRY="BQ"#] selected[#endif#]>Bonaire, Sint Eustatius and Saba</option>
+  		  <option value="BR" [#if COUNTRY="BR"#] selected[#endif#]>Brazil</option>
+  		  <option value="BS" [#if COUNTRY="BS"#] selected[#endif#]>Bahamas</option>
+  		  <option value="BT" [#if COUNTRY="BT"#] selected[#endif#]>Bhutan</option>
+  		  <option value="BW" [#if COUNTRY="BW"#] selected[#endif#]>Botswana</option>
+  		  <option value="BY" [#if COUNTRY="BY"#] selected[#endif#]>Belarus</option>
+  		  <option value="BZ" [#if COUNTRY="BZ"#] selected[#endif#]>Belize</option>
+  		  <option value="CA" [#if COUNTRY="CA"#] selected[#endif#]>Canada</option>
+  		  <option value="CC" [#if COUNTRY="CC"#] selected[#endif#]>Cocos (Keeling) Islands</option>
+  		  <option value="CD" [#if COUNTRY="CD"#] selected[#endif#]>Democratic Republic of the Congo</option>
+  		  <option value="CF" [#if COUNTRY="CF"#] selected[#endif#]>Central African Republic</option>
+  		  <option value="CG" [#if COUNTRY="CG"#] selected[#endif#]>Republic of the Congo</option>
+  		  <option value="CH" [#if COUNTRY="CH"#] selected[#endif#]>Switzerland</option>
+  		  <option value="CI" [#if COUNTRY="CI"#] selected[#endif#]>Ivory Coast</option>
+  		  <option value="CK" [#if COUNTRY="CK"#] selected[#endif#]>Cook Islands</option>
+  		  <option value="CL" [#if COUNTRY="CL"#] selected[#endif#]>Chile</option>
+  		  <option value="CM" [#if COUNTRY="CM"#] selected[#endif#]>Cameroon</option>
+  		  <option value="CN" [#if COUNTRY="CN"#] selected[#endif#]>China</option>
+  		  <option value="CO" [#if COUNTRY="CO"#] selected[#endif#]>Colombia</option>
+  		  <option value="CR" [#if COUNTRY="CR"#] selected[#endif#]>Costa Rica</option>
+  		  <option value="CU" [#if COUNTRY="CU"#] selected[#endif#]>Cuba</option>
+  		  <option value="CV" [#if COUNTRY="CV"#] selected[#endif#]>Cape Verde</option>
+  		  <option value="CX" [#if COUNTRY="CX"#] selected[#endif#]>Christmas Island</option>
+  		  <option value="CW" [#if COUNTRY="CW"#] selected[#endif#]>Curaçao</option>
+  		  <option value="CY" [#if COUNTRY="CY"#] selected[#endif#]>Cyprus</option>
+  		  <option value="CZ" [#if COUNTRY="CZ"#] selected[#endif#]>Czech Republic</option>
+  		  <option value="DE" [#if COUNTRY="DE"#] selected[#endif#]>Germany</option>
+  		  <option value="DJ" [#if COUNTRY="DJ"#] selected[#endif#]>Djibouti</option>
+  		  <option value="DK" [#if COUNTRY="DK"#] selected[#endif#]>Denmark</option>
+  		  <option value="DM" [#if COUNTRY="DM"#] selected[#endif#]>Dominica</option>
+  		  <option value="DO" [#if COUNTRY="DO"#] selected[#endif#]>Dominican Republic</option>
+  		  <option value="DZ" [#if COUNTRY="DZ"#] selected[#endif#]>Algeria</option>
+  		  <option value="EC" [#if COUNTRY="EC"#] selected[#endif#]>Ecuador</option>
+  		  <option value="EE" [#if COUNTRY="EE"#] selected[#endif#]>Estonia</option>
+  		  <option value="EG" [#if COUNTRY="EG"#] selected[#endif#]>Egypt</option>
+  		  <option value="EH" [#if COUNTRY="EH"#] selected[#endif#]>Western Sahara</option>
+  		  <option value="ER" [#if COUNTRY="ER"#] selected[#endif#]>Eritrea</option>
+  		  <option value="ES" [#if COUNTRY="ES"#] selected[#endif#]>Spain</option>
+  		  <option value="ET" [#if COUNTRY="ET"#] selected[#endif#]>Ethiopia</option>
+  		  <option value="FI" [#if COUNTRY="FI"#] selected[#endif#]>Finland</option>
+  		  <option value="FJ" [#if COUNTRY="FJ"#] selected[#endif#]>Fiji</option>
+  		  <option value="FK" [#if COUNTRY="FK"#] selected[#endif#]>Falkland Islands</option>
+  		  <option value="FM" [#if COUNTRY="FM"#] selected[#endif#]>Micronesia</option>
+  		  <option value="FO" [#if COUNTRY="FO"#] selected[#endif#]>Faroe Islands</option>
+  		  <option value="FR" [#if COUNTRY="FR"#] selected[#endif#]>France</option>
+  		  <option value="GA" [#if COUNTRY="GA"#] selected[#endif#]>Gabon</option>
+  		  <option value="GB" [#if COUNTRY="GB"#] selected[#endif#]>United Kingdom</option>
+  		  <option value="GD" [#if COUNTRY="GD"#] selected[#endif#]>Grenada</option>
+  		  <option value="GE" [#if COUNTRY="GE"#] selected[#endif#]>Georgia</option>
+  		  <option value="GF" [#if COUNTRY="GF"#] selected[#endif#]>French Guiana</option>
+  		  <option value="GG" [#if COUNTRY="GG"#] selected[#endif#]>Guernsey</option>
+  		  <option value="GH" [#if COUNTRY="GH"#] selected[#endif#]>Ghana</option>
+  		  <option value="GI" [#if COUNTRY="GI"#] selected[#endif#]>Gibraltar</option>
+  		  <option value="GL" [#if COUNTRY="GL"#] selected[#endif#]>Greenland</option>
+  		  <option value="GM" [#if COUNTRY="GM"#] selected[#endif#]>Gambia</option>
+  		  <option value="GN" [#if COUNTRY="GN"#] selected[#endif#]>Guinea</option>
+  		  <option value="GP" [#if COUNTRY="GP"#] selected[#endif#]>Guadeloupe</option>
+  		  <option value="GQ" [#if COUNTRY="GQ"#] selected[#endif#]>Equatorial Guinea</option>
+  		  <option value="GR" [#if COUNTRY="GR"#] selected[#endif#]>Greece</option>
+  		  <option value="GS" [#if COUNTRY="GS"#] selected[#endif#]>South Georgia and the South Sandwich Islands</option>
+  		  <option value="GT" [#if COUNTRY="GT"#] selected[#endif#]>Guatemala</option>
+  		  <option value="GU" [#if COUNTRY="GU"#] selected[#endif#]>Guam</option>
+  		  <option value="GW" [#if COUNTRY="GW"#] selected[#endif#]>Guinea-Bissau</option>
+  		  <option value="GY" [#if COUNTRY="GY"#] selected[#endif#]>Guyana</option>
+  		  <option value="HK" [#if COUNTRY="HK"#] selected[#endif#]>Hong Kong</option>
+  		  <option value="HN" [#if COUNTRY="HN"#] selected[#endif#]>Honduras</option>
+  		  <option value="HR" [#if COUNTRY="HR"#] selected[#endif#]>Croatia</option>
+  		  <option value="HT" [#if COUNTRY="HT"#] selected[#endif#]>Haiti</option>
+  		  <option value="HU" [#if COUNTRY="HU"#] selected[#endif#]>Hungary</option>
+  		  <option value="ID" [#if COUNTRY="ID"#] selected[#endif#]>Indonesia</option>
+  		  <option value="IE" [#if COUNTRY="IE"#] selected[#endif#]>Ireland</option>
+  		  <option value="IL" [#if COUNTRY="IL"#] selected[#endif#]>Israel</option>
+  		  <option value="IM" [#if COUNTRY="IM"#] selected[#endif#]>Isle of Man</option>
+  		  <option value="IN" [#if COUNTRY="IN"#] selected[#endif#]>India</option>
+  		  <option value="IQ" [#if COUNTRY="IQ"#] selected[#endif#]>Iraq</option>
+  		  <option value="IR" [#if COUNTRY="IR"#] selected[#endif#]>Iran</option>
+  		  <option value="IS" [#if COUNTRY="IS"#] selected[#endif#]>Iceland</option>
+  		  <option value="IT" [#if COUNTRY="IT"#] selected[#endif#]>Italy</option>
+  		  <option value="JE" [#if COUNTRY="JE"#] selected[#endif#]>Jersey</option>
+  		  <option value="JM" [#if COUNTRY="JM"#] selected[#endif#]>Jamaica</option>
+  		  <option value="JO" [#if COUNTRY="JO"#] selected[#endif#]>Jordan</option>
+  		  <option value="JP" [#if COUNTRY="JP"#] selected[#endif#]>Japan</option>
+  		  <option value="KE" [#if COUNTRY="KE"#] selected[#endif#]>Kenya</option>
+  		  <option value="KG" [#if COUNTRY="KG"#] selected[#endif#]>Kyrgyzstan</option>
+  		  <option value="KH" [#if COUNTRY="KH"#] selected[#endif#]>Cambodia</option>
+  		  <option value="KI" [#if COUNTRY="KI"#] selected[#endif#]>Kiribati</option>
+  		  <option value="KM" [#if COUNTRY="KM"#] selected[#endif#]>Comoros</option>
+  		  <option value="KN" [#if COUNTRY="KN"#] selected[#endif#]>Saint Kitts and Nevis</option>
+  		  <option value="KP" [#if COUNTRY="KP"#] selected[#endif#]>North Korea</option>
+  		  <option value="KR" [#if COUNTRY="KR"#] selected[#endif#]>South Korea</option>
+  		  <option value="KW" [#if COUNTRY="KW"#] selected[#endif#]>Kuwait</option>
+  		  <option value="KY" [#if COUNTRY="KY"#] selected[#endif#]>Cayman Islands</option>
+  		  <option value="KZ" [#if COUNTRY="KZ"#] selected[#endif#]>Kazakhstan</option>
+  		  <option value="LA" [#if COUNTRY="LA"#] selected[#endif#]>Laos</option>
+  		  <option value="LB" [#if COUNTRY="LB"#] selected[#endif#]>Lebanon</option>
+  		  <option value="LC" [#if COUNTRY="LC"#] selected[#endif#]>Saint Lucia</option>
+  		  <option value="LI" [#if COUNTRY="LI"#] selected[#endif#]>Liechtenstein</option>
+  		  <option value="LK" [#if COUNTRY="LK"#] selected[#endif#]>Sri Lanka</option>
+  		  <option value="LR" [#if COUNTRY="LR"#] selected[#endif#]>Liberia</option>
+  		  <option value="LS" [#if COUNTRY="LS"#] selected[#endif#]>Lesotho</option>
+  		  <option value="LT" [#if COUNTRY="LT"#] selected[#endif#]>Lithuania</option>
+  		  <option value="LU" [#if COUNTRY="LU"#] selected[#endif#]>Luxembourg</option>
+  		  <option value="LV" [#if COUNTRY="LV"#] selected[#endif#]>Latvia</option>
+  		  <option value="LY" [#if COUNTRY="LY"#] selected[#endif#]>Libya</option>
+  		  <option value="MA" [#if COUNTRY="MA"#] selected[#endif#]>Morocco</option>
+  		  <option value="MC" [#if COUNTRY="MC"#] selected[#endif#]>Monaco</option>
+  		  <option value="MD" [#if COUNTRY="MD"#] selected[#endif#]>Moldova</option>
+  		  <option value="ME" [#if COUNTRY="ME"#] selected[#endif#]>Montenegro</option>
+  		  <option value="MF" [#if COUNTRY="MF"#] selected[#endif#]>Saint Martin</option>
+  		  <option value="MG" [#if COUNTRY="MG"#] selected[#endif#]>Madagascar</option>
+  		  <option value="MH" [#if COUNTRY="MH"#] selected[#endif#]>Marshall Islands</option>
+  		  <option value="MK" [#if COUNTRY="MK"#] selected[#endif#]>Macedonia</option>
+  		  <option value="ML" [#if COUNTRY="ML"#] selected[#endif#]>Mali</option>
+  		  <option value="MM" [#if COUNTRY="MM"#] selected[#endif#]>Burma (Myanmar)</option>
+  		  <option value="MN" [#if COUNTRY="MN"#] selected[#endif#]>Mongolia</option>
+  		  <option value="MO" [#if COUNTRY="MO"#] selected[#endif#]>Macau</option>
+  		  <option value="MP" [#if COUNTRY="MP"#] selected[#endif#]>Northern Mariana Islands</option>
+  		  <option value="MQ" [#if COUNTRY="MQ"#] selected[#endif#]>Martinique</option>
+  		  <option value="MR" [#if COUNTRY="MR"#] selected[#endif#]>Mauritania</option>
+  		  <option value="MS" [#if COUNTRY="MS"#] selected[#endif#]>Montserrat</option>
+  		  <option value="MT" [#if COUNTRY="MT"#] selected[#endif#]>Malta</option>
+  		  <option value="MU" [#if COUNTRY="MU"#] selected[#endif#]>Mauritius</option>
+  		  <option value="MV" [#if COUNTRY="MV"#] selected[#endif#]>Maldives</option>
+  		  <option value="MW" [#if COUNTRY="MW"#] selected[#endif#]>Malawi</option>
+  		  <option value="MX" [#if COUNTRY="MX"#] selected[#endif#]>Mexico</option>
+  		  <option value="MY" [#if COUNTRY="MY"#] selected[#endif#]>Malaysia</option>
+  		  <option value="MZ" [#if COUNTRY="MZ"#] selected[#endif#]>Mozambique</option>
+  		  <option value="NA" [#if COUNTRY="NA"#] selected[#endif#]>Namibia</option>
+  		  <option value="NC" [#if COUNTRY="NC"#] selected[#endif#]>New Caledonia</option>
+  		  <option value="NE" [#if COUNTRY="NE"#] selected[#endif#]>Niger</option>
+  		  <option value="NF" [#if COUNTRY="NF"#] selected[#endif#]>Norfolk Island</option>
+  		  <option value="NG" [#if COUNTRY="NG"#] selected[#endif#]>Nigeria</option>
+  		  <option value="NI" [#if COUNTRY="NI"#] selected[#endif#]>Nicaragua</option>
+  		  <option value="NL" [#if COUNTRY="NL"#] selected[#endif#]>Netherlands</option>
+  		  <option value="NO" [#if COUNTRY="NO"#] selected[#endif#]>Norway</option>
+  		  <option value="NP" [#if COUNTRY="NP"#] selected[#endif#]>Nepal</option>
+  		  <option value="NU" [#if COUNTRY="NU"#] selected[#endif#]>Niue</option>
+  		  <option value="NZ" [#if COUNTRY="NZ"#] selected[#endif#]>New Zealand</option>
+  		  <option value="OM" [#if COUNTRY="OM"#] selected[#endif#]>Oman</option>
+  		  <option value="PA" [#if COUNTRY="PA"#] selected[#endif#]>Panama</option>
+  		  <option value="PE" [#if COUNTRY="PE"#] selected[#endif#]>Peru</option>
+  		  <option value="PF" [#if COUNTRY="PF"#] selected[#endif#]>French Polynesia</option>
+  		  <option value="PG" [#if COUNTRY="PG"#] selected[#endif#]>Papua New Guinea</option>
+  		  <option value="PH" [#if COUNTRY="PH"#] selected[#endif#]>Philippines</option>
+  		  <option value="PK" [#if COUNTRY="PK"#] selected[#endif#]>Pakistan</option>
+  		  <option value="PL" [#if COUNTRY="PL"#] selected[#endif#]>Poland</option>
+  		  <option value="PM" [#if COUNTRY="PM"#] selected[#endif#]>Saint Pierre and Miquelon</option>
+  		  <option value="PN" [#if COUNTRY="PN"#] selected[#endif#]>Pitcairn Islands</option>
+  		  <option value="PR" [#if COUNTRY="PR"#] selected[#endif#]>Puerto Rico</option>
+  		  <option value="PS" [#if COUNTRY="PS"#] selected[#endif#]>State of Palestine</option>
+  		  <option value="PT" [#if COUNTRY="PT"#] selected[#endif#]>Portugal</option>
+  		  <option value="PW" [#if COUNTRY="PW"#] selected[#endif#]>Palau</option>
+  		  <option value="PY" [#if COUNTRY="PY"#] selected[#endif#]>Paraguay</option>
+  		  <option value="QA" [#if COUNTRY="QA"#] selected[#endif#]>Qatar</option>
+  		  <option value="RE" [#if COUNTRY="RE"#] selected[#endif#]>Réunion</option>
+  		  <option value="RO" [#if COUNTRY="RO"#] selected[#endif#]>Romania</option>
+  		  <option value="RS" [#if COUNTRY="RS"#] selected[#endif#]>Serbia</option>
+  		  <option value="RU" [#if COUNTRY="RU"#] selected[#endif#]>Russia</option>
+  		  <option value="RW" [#if COUNTRY="RW"#] selected[#endif#]>Rwanda</option>
+  		  <option value="SA" [#if COUNTRY="SA"#] selected[#endif#]>Saudi Arabia</option>
+  		  <option value="SB" [#if COUNTRY="SB"#] selected[#endif#]>Solomon Islands</option>
+  		  <option value="SC" [#if COUNTRY="SC"#] selected[#endif#]>Seychelles</option>
+  		  <option value="SD" [#if COUNTRY="SD"#] selected[#endif#]>Sudan</option>
+  		  <option value="SE" [#if COUNTRY="SE"#] selected[#endif#]>Sweden</option>
+  		  <option value="SG" [#if COUNTRY="SG"#] selected[#endif#]>Singapore</option>
+  		  <option value="SH" [#if COUNTRY="SH"#] selected[#endif#]>Saint Helena</option>
+  		  <option value="SI" [#if COUNTRY="SI"#] selected[#endif#]>Slovenia</option>
+  		  <option value="SJ" [#if COUNTRY="SJ"#] selected[#endif#]>Svalbard</option>
+  		  <option value="SK" [#if COUNTRY="SK"#] selected[#endif#]>Slovakia</option>
+  		  <option value="SL" [#if COUNTRY="SL"#] selected[#endif#]>Sierra Leone</option>
+  		  <option value="SM" [#if COUNTRY="SM"#] selected[#endif#]>San Marino</option>
+  		  <option value="SN" [#if COUNTRY="SN"#] selected[#endif#]>Senegal</option>
+  		  <option value="SO" [#if COUNTRY="SO"#] selected[#endif#]>Somalia</option>
+  		  <option value="SR" [#if COUNTRY="SR"#] selected[#endif#]>Suriname</option>
+  		  <option value="SS" [#if COUNTRY="SS"#] selected[#endif#]>Sao Tome and Principe</option>
+  		  <option value="ST" [#if COUNTRY="ST"#] selected[#endif#]>El Salvador</option>
+  		  <option value="SV" [#if COUNTRY="SV"#] selected[#endif#]>El Salvador</option>
+  		  <option value="SX" [#if COUNTRY="SX"#] selected[#endif#]>Sint Maarten</option>
+  		  <option value="SY" [#if COUNTRY="SY"#] selected[#endif#]>Syria</option>
+  		  <option value="SZ" [#if COUNTRY="SZ"#] selected[#endif#]>Swaziland</option>
+  		  <option value="TC" [#if COUNTRY="TC"#] selected[#endif#]>Turks and Caicos Islands</option>
+  		  <option value="TD" [#if COUNTRY="TD"#] selected[#endif#]>Chad</option>
+  		  <option value="TF" [#if COUNTRY="TF"#] selected[#endif#]>French Southern Territories</option>
+  		  <option value="TG" [#if COUNTRY="TG"#] selected[#endif#]>Togo</option>
+  		  <option value="TH" [#if COUNTRY="TH"#] selected[#endif#]>Thailand</option>
+  		  <option value="TJ" [#if COUNTRY="TJ"#] selected[#endif#]>Tajikistan</option>
+  		  <option value="TL" [#if COUNTRY="TL"#] selected[#endif#]>Timor-Leste</option>
+  		  <option value="TM" [#if COUNTRY="TM"#] selected[#endif#]>Turkmenistan</option>
+  		  <option value="TN" [#if COUNTRY="TN"#] selected[#endif#]>Tunisia</option>
+  		  <option value="TO" [#if COUNTRY="TO"#] selected[#endif#]>Tonga</option>
+  		  <option value="TR" [#if COUNTRY="TR"#] selected[#endif#]>Turkey</option>
+  		  <option value="TT" [#if COUNTRY="TT"#] selected[#endif#]>Trinidad and Tobago</option>
+  		  <option value="TV" [#if COUNTRY="TV"#] selected[#endif#]>Tuvalu</option>
+  		  <option value="TW" [#if COUNTRY="TW"#] selected[#endif#]>Taiwan</option>
+  		  <option value="TZ" [#if COUNTRY="TZ"#] selected[#endif#]>Tanzania</option>
+  		  <option value="UA" [#if COUNTRY="UA"#] selected[#endif#]>Ukraine</option>
+  		  <option value="UG" [#if COUNTRY="UG"#] selected[#endif#]>Uganda</option>
+  		  <option value="US" [#if COUNTRY="US"#] selected[#endif#]>United States</option>
+  		  <option value="UY" [#if COUNTRY="UY"#] selected[#endif#]>Uruguay</option>
+  		  <option value="UZ" [#if COUNTRY="UZ"#] selected[#endif#]>Uzbekistan</option>
+  		  <option value="VA" [#if COUNTRY="VA"#] selected[#endif#]>Holy See (Vatican City)</option>
+  		  <option value="VC" [#if COUNTRY="VC"#] selected[#endif#]>Saint Vincent and the Grenadines</option>
+  		  <option value="VE" [#if COUNTRY="VE"#] selected[#endif#]>Venezuela</option>
+  		  <option value="VG" [#if COUNTRY="VG"#] selected[#endif#]>British Virgin Islands</option>
+  		  <option value="VI" [#if COUNTRY="VI"#] selected[#endif#]>US Virgin Islands</option>
+  		  <option value="VN" [#if COUNTRY="VN"#] selected[#endif#]>Vietnam</option>
+  		  <option value="VU" [#if COUNTRY="VU"#] selected[#endif#]>Vanuatu</option>
+  		  <option value="WF" [#if COUNTRY="WF"#] selected[#endif#]>Wallis and Futuna</option>
+  		  <option value="WS" [#if COUNTRY="WS"#] selected[#endif#]>Samoa</option>
+  		  <option value="XK" [#if COUNTRY="XK"#] selected[#endif#]>Kosovo</option>
+  		  <option value="YE" [#if COUNTRY="YE"#] selected[#endif#]>Yemen</option>
+  		  <option value="YT" [#if COUNTRY="YT"#] selected[#endif#]>Mayotte</option>
+  		  <option value="ZA" [#if COUNTRY="ZA"#] selected[#endif#]>South Africa</option>
+  		  <option value="ZM" [#if COUNTRY="ZM"#] selected[#endif#]>Zambia</option>
+  		  <option value="ZW" [#if COUNTRY="ZW"#] selected[#endif#]>Zimbabwe</option>
+      </select>
+    </div>
+    <div class="col-sm-5">
+     <h5 id="ow_label" class="hidden"><img src="/img/ajax-loader.gif" border="0"> Список городов загружается</h5>
+       <select name="ow_city_id" id="ow_city" class="form-control hidden">
+		<option value="">--<#LANG_OW_CHOOSE_CITY#>--</option>
+       </select>
+    </div>
+ </div>
+
+
+<!-- CITY_NAME (varchar) -->
+<!--div class="form-group[#if ERR_CITY_NAME#] has-error[#endif#]">
+ <label for="city_name" class="col-lg-3 control-label">
+ CITY_NAME:
+ </label>
+ <div class="col-lg-9"><input id="city_name" name="city_name" value="[#CITY_NAME#]" type="text" class="form-control"></div>
+</div>
+<!-- CITY_LAT (varchar) -->
+<!--div class="form-group[#if ERR_CITY_LAT#] has-error[#endif#]">
+ <label for="city_lat" class="col-lg-3 control-label">
+ CITY_LAT:
+ </label>
+ <div class="col-lg-9"><input id="city_lat" name="city_lat" value="[#CITY_LAT#]" type="text" class="form-control"></div>
+</div>
+<!-- CITY_LON (varchar) -->
+<!--div class="form-group[#if ERR_CITY_LON#] has-error[#endif#]">
+ <label for="city_lon" class="col-lg-3 control-label">
+ CITY_LON:
+ </label>
+ <div class="col-lg-9"><input id="city_lon" name="city_lon" value="[#CITY_LON#]" type="text" class="form-control"></div>
+</div>
+
+
+<!-- APIKEY (varchar) -->
+<div class="form-group[#if ERR_APIKEY#] has-error[#endif#]">
+ <label for="apikey" class="col-lg-3 control-label">
+ <#LANG_OW_API_KEY#>:
+ </label>
+ <div class="col-lg-9"><input id="apikey" name="apikey" value="[#APIKEY#]" type="text" class="form-control"></div>
+</div>
+<!-- APIKEY_METHOD (varchar) -->
+<div class="form-group[#if ERR_APIKEY_METHOD#] has-error[#endif#]">
+ <label for="apikey_method" class="col-lg-3 control-label">
+ <#LANG_OW_API_METHOD#>:
+ </label>
+ <div class="col-lg-9">
+   <select class="form-control" name="apikey_method">
+		<option value="fact" [#if APIKEY_METHOD=="fact" #] selected[#endif#]>Fact</option>
+	</select>
+ </div>
+</div>
+<!-- OW_ROUND (varchar) -->
+<!--div class="form-group[#if ERR_OW_ROUND#] has-error[#endif#]">
+ <label for="ow_round" class="col-lg-3 control-label">
+ <#LANG_OW_ROUND#>:
+ </label>
+ <div class="col-lg-9"><input id="ow_round" name="ow_round" value="[#OW_ROUND#]" type="text" class="form-control"></div>
+</div>
+<!-- OW_INTERVAL (varchar) -->
+<div class="form-group[#if ERR_OW_INTERVAL#] has-error[#endif#]">
+ <label for="ow_interval" class="col-lg-3 control-label">
+ <#LANG_OW_UPDATE_PERIOD#>:
+ </label>
+ <div class="col-lg-9">
+  <select class="form-control" name="ow_interval">
+		<option value="0" [#if OW_INTERVAL="0" #] selected[#endif#]>----</option>
+		<option value="1" [#if OW_INTERVAL="1" #] selected[#endif#]><#LANG_OW_UPDATE_PERIOD_1HOUR#></option>
+		<option value="2" [#if OW_INTERVAL="2" #] selected[#endif#]><#LANG_OW_UPDATE_PERIOD_2HOUR#></option>
+		<option value="3" [#if OW_INTERVAL="3" #] selected[#endif#]><#LANG_OW_UPDATE_PERIOD_3HOUR#></option>
+		<option value="4" [#if OW_INTERVAL="4" #] selected[#endif#]><#LANG_OW_UPDATE_PERIOD_4HOUR#></option>
+		<option value="5" [#if OW_INTERVAL="5" #] selected[#endif#]><#LANG_OW_UPDATE_PERIOD_5HOUR#></option>
+  </select>
+</div>
+</div>
+<!-- LINKED_OBJECT (varchar) -->
+<div class="form-group[#if ERR_LINKED_OBJECT#] has-error[#endif#][#if module_mode!=1#] hidden[#endif#]">
+ <label for="linked_object" class="col-lg-3 control-label">
+ <#LANG_LINKED_OBJECT#>:
+ </label>
+ <div class="col-lg-9"><input id="linked_object" name="linked_object" value="[#LINKED_OBJECT#]" type="text" class="form-control"></div>
+</div>
+[#module name="linkedobject" object_field="linked_object"#]
+
+<div class="form-group[#if module_mode!=1#] hidden[#endif#]">
+ <label for="title" class="col-lg-3 control-label">
+ Exclude properties:
+ </label>
+ <div class="col-lg-9"><textarea id="exclude_prp" name="exclude_prp" type="text" class="form-control" rows=3>[#EXCLUDE_PRP#]</textarea></div>
+</div>
+
+<div class="form-group">
+        <div class="col-lg-offset-3 col-lg-4">
+ [#if ID!=""#]
+ <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
+ [#else ID#]
+ <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
+ [#endif ID#]
+ <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
+<input type="hidden" name="id" value="<#ID#>">
+<input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+<input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
+<input type="hidden" name="mode" value="update">
+</div>
+</div>
+</fieldset>
+
+<script>
+[#if COUNTRY#]country_change();[#endif#]
+function country_change() {
+
+		var element = document.getElementById("ow_city");
+		element.options.length = 1;
+		element.classList.add("hidden");
+		var element = document.getElementById("ow_label");
+		element.classList.remove("hidden");
+
+	var country=document.getElementById("country").value;
+	var url="/ajax/app_openweather.html?op=country_change&cname="+country[#if CITY_ID#]+"&cityid=[#CITY_ID#]"[#endif#];
+	$.ajax({
+		url: url,
+		cache: false,
+		success: function(html){
+			var value = html.split(/\n+/g);
+			var resp = tryParseJSON(value[0]);
+			  if(typeof resp.error === 'undefined') {
+				if ((typeof resp.result !== 'undefined') && resp.result == 'ok') {
+				    //console.log('resp ok');
+					resp.cities.forEach(function(item, i, arr) {
+						let newOption = new Option(item.name+' ('+item.lat+'|'+item.lon+')', item.id);
+						ow_city.append(newOption);
+            if(item.selected) ow_city.selectedIndex=i+1;
+						//console.log(item.name+'|'+item.id);
+					});
+				}
+					var element = document.getElementById("ow_label");
+					element.classList.add("hidden");
+					var element = document.getElementById("ow_city");
+					element.classList.remove("hidden");
+
+			  }
+		}
+    });
+
+}
+
+function tryParseJSON (jsonString){
+  try {
+     var o = JSON.parse(jsonString);
+     if (o && typeof o === "object") return o;
+  }
+  catch (e) { }
+  return false;
+};
+</script>
+
+</form>

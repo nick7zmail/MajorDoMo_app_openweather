@@ -1,0 +1,78 @@
+
+<!-- Table 'app_openweather_cities' edit -->
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+
+<fieldset>
+<div class="form-group">
+	<label for="module_mode" class="col-lg-3 control-label">
+	Expert mode
+	</label>
+	<div class="btn-group col-md-4" data-toggle="buttons">
+		<label class="btn [#if module_mode=="0" || module_mode==""#]btn-primary[#else#]btn-default[#endif#]">
+			<input type="radio" name="module_mode" value="0" [#if module_mode=="0"#] checked[#endif#]> OFF
+		</label>
+		<label class="btn [#if module_mode=="1"#]btn-primary[#else#]btn-default[#endif#]">
+			<input type="radio" name="module_mode" value="1" [#if module_mode=="1"#] checked[#endif#]> ON
+		</label>
+	</div>
+</div>
+<div class="form-group">
+	<label for="ow_round" class="col-lg-3 control-label">
+	<#LANG_OW_ROUND#>
+	</label>
+	<div class="btn-group col-md-4" data-toggle="buttons">
+		<label class="btn [#if ow_round=="0"#]btn-primary[#else#]btn-default[#endif#]">
+			<input type="radio" name="ow_round" value="0" [#if ow_round=="0"#] checked[#endif#]> <#LANG_OW_UNTIL_WHOLE#>
+		</label>
+		<label class="btn [#if ow_round=="1"#]btn-primary[#else#]btn-default[#endif#]">
+			<input type="radio" name="ow_round" value="1" [#if ow_round=="1"#] checked[#endif#]> .0
+		</label>
+		<label class="btn [#if ow_round=="2"#]btn-primary[#else#]btn-default[#endif#]">
+			<input type="radio" name="ow_round" value="2" [#if ow_round=="2"#] checked[#endif#]> .00
+		</label>
+	</div>
+</div>
+<div class="form-group">
+	<label for="debug_level" class="col-lg-3 control-label">
+	Debug level
+	</label>
+	<div class="btn-group col-md-4" data-toggle="buttons">
+		<label class="btn [#if debug_level=="0"#]btn-primary[#else#]btn-default[#endif#]">
+			<input type="radio" name="debug_level" value="0" [#if debug_level=="0"#] checked[#endif#]> OFF
+		</label>
+		<label class="btn [#if debug_level=="1"#]btn-primary[#else#]btn-default[#endif#]">
+			<input type="radio" name="debug_level" value="1" [#if debug_level=="1"#] checked[#endif#]> ERR
+		</label>
+		<label class="btn [#if debug_level=="2"#]btn-primary[#else#]btn-default[#endif#]">
+			<input type="radio" name="debug_level" value="2" [#if debug_level=="2"#] checked[#endif#]> DBG
+		</label>
+	</div>
+</div>
+<div class="form-group">
+	<label for="pictures_from" class="col-lg-3 control-label">
+	Get pictures
+	</label>
+	<div class="btn-group col-md-4" data-toggle="buttons">
+		<label class="btn [#if pictures_from=="nw"#]btn-primary[#else#]btn-default[#endif#]">
+			<input type="radio" name="pictures_from" value="nw" [#if pictures_from=="nw"#] checked[#endif#]> Network
+		</label>
+		<label class="btn [#if pictures_from=="cache"#]btn-primary[#else#]btn-default[#endif#]">
+			<input type="radio" name="pictures_from" value="cache" [#if pictures_from=="cache"#] checked[#endif#]> Cache
+		</label>
+		<label class="btn [#if pictures_from=="own"#]btn-primary[#else#]btn-default[#endif#]">
+			<input type="radio" name="pictures_from" value="own" [#if pictures_from=="own"#] checked[#endif#]> Own folder
+		</label>
+	</div>
+</div>
+<div class="form-group">
+        <div class="col-lg-offset-3 col-lg-4">
+
+ <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
+ <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
+<input type="hidden" name="view_mode" value="update_settings">
+<input type="hidden" name="mode" value="update">
+</div>
+</div>
+</fieldset>
+
+</form>

@@ -1,0 +1,32 @@
+<div class="form-inline">
+   <img src="/img/modules/app_openweather.png" width="30" height="30" class="form-group">
+   <h3 class="form-group" style="margin: 0 0;"><#LANG_OW_APP_NAME#></h3>
+   <hr>
+</div>
+[#if VIEW_MODE!="edit_app_openweather_cities"#]
+<ul class="nav nav-tabs">     
+   <li [#if VIEW_MODE="" #] class="active" [#endif#]><a href="?view_mode="><span class="glyphicon glyphicon-map-marker"></span> <#LANG_LOCATION#></a></li>
+   <!--li [#if VIEW_MODE="cities" #] class="active" [#endif#]><a href="?view_mode=cities"><span class="glyphicon glyphicon-cloud"></span> <#LANG_OW_TAB_WEATHER#></a></li-->
+   <li [#if VIEW_MODE="settings" #] class="active" [#endif#]><a href="?view_mode=settings"><span class="glyphicon glyphicon-cog"></span> <#LANG_OW_TAB_SETTINGS#></a></li>
+</ul><br>[#endif VIEW_MODE#]
+ <!-- action usual -->
+ <!-- table app_openweather_cities search -->
+ [#if VIEW_MODE="search_app_openweather_cities" || VIEW_MODE=""#]
+  [#inc app_openweather_cities_search_admin.html#]
+ [#endif VIEW_MODE#]
+ <!-- / table app_openweather_cities search -->
+ 
+ <!-- table app_openweather_cities edit -->
+ [#if VIEW_MODE="edit_app_openweather_cities"#]
+   [#inc app_openweather_cities_edit.html#]
+ [#endif VIEW_MODE#]
+ <!-- / table app_openweather_cities edit -->
+ <!-- table app_openweather_cities view --> 
+ [#if VIEW_MODE="view_app_openweather_cities"#]
+   [#inc app_openweather_cities_view.html#]
+ [#endif VIEW_MODE#]
+ <!-- / table app_openweather_cities view -->
+
+ [#if VIEW_MODE="settings"#]
+   [#inc app_openweather_settings.html#]
+ [#endif VIEW_MODE#]
