@@ -22,7 +22,7 @@ while($ret<=3) {
       if (stripos($cities[$i]['EXCLUDE_PRP'], 'wind_direction_full')===false)   sg($obj.'.wind_direction_full', getWindDirection(round($period->wind->deg, $round), true));
       if (stripos($cities[$i]['EXCLUDE_PRP'], 'wind_speed')===false)            sg($obj.'.wind_speed', round($period->wind->speed, $round));
       if (stripos($cities[$i]['EXCLUDE_PRP'], 'humidity')===false &&
-      $period->main->humidity)                                                     sg($obj.'.humidity', round($period->main->humidity, $round));
+      $period->main->humidity)                                                  sg($obj.'.humidity', round($period->main->humidity, $round));
       if (stripos($cities[$i]['EXCLUDE_PRP'], 'pressure')===false)              sg($obj.'.pressure', round($period->main->pressure, $round));
       if (stripos($cities[$i]['EXCLUDE_PRP'], 'pressure_mmhg')===false)         sg($obj.'.pressure_mmhg', round(ConvertPressure($period->main->pressure, "hpa", "mmhg", 2), $round));
       if (stripos($cities[$i]['EXCLUDE_PRP'], 'image')===false)                 sg($obj.'.image', $period->weather[0]->icon);

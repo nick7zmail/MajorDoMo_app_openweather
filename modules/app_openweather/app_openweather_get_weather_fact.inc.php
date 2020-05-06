@@ -16,7 +16,7 @@ while($ret<=3) {
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'wind_speed')===false)          sg($obj.'.wind_speed',round($curWeather->wind->speed, $round));
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'humidity')===false)            sg($obj.'.humidity', round($curWeather->main->humidity, $round));
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'pressure')===false)            sg($obj.'.pressure', round($curWeather->main->pressure, $round));
-    if (stripos($cities[$i]['EXCLUDE_PRP'], 'pressure_mmhg')===false)       sg($obj.'.pressure_mmhg', round(ConvertPressure($fact->pressure, "hpa", "mmhg", 2), $round));
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'pressure_mmhg')===false)       sg($obj.'.pressure_mmhg', round(ConvertPressure($curWeather->pressure, "hpa", "mmhg", 2), $round));
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'image')===false)               sg($obj.'.image', $curWeather->weather[0]->icon);
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'clouds')===false)              sg($obj.'.clouds', $curWeather->clouds->all);
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'rain')===false)                sg($obj.'.rain', isset($curWeather->main->rain) ? $fact->rain : '');
