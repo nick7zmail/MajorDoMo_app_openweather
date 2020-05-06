@@ -25,7 +25,7 @@
    $rec['CITY_LON']=gr('city_lon');
   //updating 'CITY_ID' (varchar)
    $rec['CITY_ID']=gr('ow_city_id');
-   if ($rec['CITY_ID']=='') {
+   if ($rec['CITY_ID']=='' || $rec['COUNTRY']=='') {
     $out['ERR_CITY_ID']=1;
     $ok=0;
    }
@@ -58,6 +58,20 @@
         if($rec['ID']==1) $rec['LINKED_OBJECT']='ow_fact';
         addClassObject('ow_fact', $rec['LINKED_OBJECT']);
         SQLUpdate($table_name, $rec);
+      }
+    }
+    if($rec['APIKEY_METHOD']=='forecast_5'){
+      if(!$rec['LINKED_OBJECT']) {
+        $rec['LINKED_OBJECT']='ow_forecast_'.$rec['ID'];
+        addClassObject('ow_forecast', $rec['LINKED_OBJECT']);
+        SQLUpdate($table_name, $rec);
+        $ow_forecast_interval=5;
+        $ow_forecast_interval=$ow_forecast_interval*8;
+        for ($i = 1; $i < $ow_forecast_interval; $i++)
+  			{
+          $obj=$rec['LINKED_OBJECT'].'_'.$i;
+          addClassObject('ow_forecast',  $obj);
+  			}
       }
     }
     $out['OK']=1;

@@ -1,8 +1,9 @@
 <?php
 while($ret<=3) {
   $url = "http://api.openweathermap.org/data/2.5/weather?id=" . $cities[$i]['CITY_ID'] . "&mode=json&units=" . $unit . "&lang=" . $lang . "&appid=" . $apiKey;
+  if($this->config['debug_level']>=2) debmes('[DBG] --- [fact] '.$url, 'openweather');
   $data =  getURL($url);
-  if($this->config['debug_level']>=2) debmes('[DBG] +++ '.$data, 'openweather');
+  if($this->config['debug_level']>=2) debmes('[DBG] +++ [fact] '.$data, 'openweather');
   $curWeather = json_decode($data);
   if ($curWeather->cod == "200") {
     $obj=$cities[$i]['LINKED_OBJECT'];

@@ -18,7 +18,7 @@
  </label>
  <div class="col-lg-9"><input id="title" name="title" value="[#TITLE#]" type="text" class="form-control"></div>
 </div>
- <div class="form-group">
+ <div class="form-group[#if ERR_CITY_ID#] has-error[#endif#]">
   <label for="country" class="col-lg-3 control-label">
  <#LANG_LOCATION#>:
  </label>
@@ -318,6 +318,7 @@
  <div class="col-lg-9">
    <select class="form-control" name="apikey_method">
 		<option value="fact" [#if APIKEY_METHOD=="fact" #] selected[#endif#]>Fact</option>
+    <option value="forecast_5" [#if APIKEY_METHOD=="forecast_5" #] selected[#endif#]>5 day / 3 hour Forecast</option>
 	</select>
  </div>
 </div>
