@@ -8,22 +8,36 @@ while($ret<=3) {
   if ($curWeather->cod == "200") {
     $obj=$cities[$i]['LINKED_OBJECT'];
     $date = date("d.m.Y G:i:s T Y", $curWeather->dt);
+    //main
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'temperature')===false)         sg($obj.'.temperature', round($curWeather->main->temp, $round));
-    if (stripos($cities[$i]['EXCLUDE_PRP'], 'weather_type')===false)        sg($obj.'.weather_type', $curWeather->weather[0]->description);
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'temp_feels_like')===false)     sg($obj.'.temp_feels_like', round($curWeather->main->feels_like, $round));
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'temp_min')===false)            sg($obj.'.temp_min', round($curWeather->main->temp_min, $round));
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'temp_max')===false)            sg($obj.'.temp_max', round($curWeather->main->temp_max, $round));
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'pressure')===false)            sg($obj.'.pressure', round($curWeather->main->pressure, $round));
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'pressure_mmhg')===false)       sg($obj.'.pressure_mmhg', round(ConvertPressure($curWeather->main->pressure, "hpa", "mmhg", 2), $round));
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'humidity')===false)            sg($obj.'.humidity', round($curWeather->main->humidity, $round));
+    //wind
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'wind_direction')===false)      sg($obj.'.wind_direction', round($curWeather->wind->deg, $round));
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'wind_direction_text')===false) sg($obj.'.wind_direction_text', getWindDirection(round($curWeather->wind->deg, $round)));
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'wind_direction_full')===false) sg($obj.'.wind_direction_full', getWindDirection(round($curWeather->wind->deg, $round), true));
-    if (stripos($cities[$i]['EXCLUDE_PRP'], 'wind_speed')===false)          sg($obj.'.wind_speed',round($curWeather->wind->speed, $round));
-    if (stripos($cities[$i]['EXCLUDE_PRP'], 'humidity')===false)            sg($obj.'.humidity', round($curWeather->main->humidity, $round));
-    if (stripos($cities[$i]['EXCLUDE_PRP'], 'pressure')===false)            sg($obj.'.pressure', round($curWeather->main->pressure, $round));
-    if (stripos($cities[$i]['EXCLUDE_PRP'], 'pressure_mmhg')===false)       sg($obj.'.pressure_mmhg', round(ConvertPressure($curWeather->pressure, "hpa", "mmhg", 2), $round));
-    if (stripos($cities[$i]['EXCLUDE_PRP'], 'image')===false)               sg($obj.'.image', $curWeather->weather[0]->icon);
-    if (stripos($cities[$i]['EXCLUDE_PRP'], 'clouds')===false)              sg($obj.'.clouds', $curWeather->clouds->all);
-    if (stripos($cities[$i]['EXCLUDE_PRP'], 'rain')===false)                sg($obj.'.rain', isset($curWeather->main->rain) ? $fact->rain : '');
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'wind_speed')===false)          sg($obj.'.wind_speed', round($curWeather->wind->speed, $round));
+    //weather
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'condCode')===false)            sg($obj.'.condCode', $curWeather->weather[0]->id);
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'weather_type')===false)        sg($obj.'.weather_type', $curWeather->weather[0]->description);
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'image')===false)               sg($obj.'.image', $curWeather->weather[0]->icon);
+    //clouds, snow, rain
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'clouds')===false)              sg($obj.'.clouds', $curWeather->clouds->all);
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'rain1h')===false)              sg($obj.'.rain', isset($curWeather->rain->{'1h'}) ? $curWeather->rain->{'1h'} : '');
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'rain3h')===false)              sg($obj.'.rain', isset($curWeather->rain->{'3h'}) ? $curWeather->rain->{'3h'} : '');
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'snow1h')===false)              sg($obj.'.rain', isset($curWeather->snow->{'1h'}) ? $curWeather->snow->{'1h'} : '');
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'snow3h')===false)              sg($obj.'.rain', isset($curWeather->snow->{'3h'}) ? $curWeather->snow->{'3h'} : '');
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'data_update')===false)         sg($obj.'.data_update', $date);
+    //system
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'sunrise')===false)             sg($obj.'.sunrise', $curWeather->sys->sunrise);
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'sunset')===false)              sg($obj.'.sunrise', $curWeather->sys->sunset);
 
-    /*$sunInfo = GetSunInfo();
+
+     /*$sunInfo = GetSunInfo();
     if ($sunInfo)
     {
      $sunRise = $sunInfo["sunrise"];

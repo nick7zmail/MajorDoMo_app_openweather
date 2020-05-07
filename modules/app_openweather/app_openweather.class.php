@@ -243,6 +243,8 @@ function usual(&$out) {
           require(DIR_MODULES.$this->name.'/app_openweather_get_weather_fact.inc.php');
         } elseif($api_method=='forecast_5') {
           require(DIR_MODULES.$this->name.'/app_openweather_get_weather_forecast5.inc.php');
+        } elseif($api_method=='forecast_16') {
+          require(DIR_MODULES.$this->name.'/app_openweather_get_weather_forecast16.inc.php');
         }
     }
   }

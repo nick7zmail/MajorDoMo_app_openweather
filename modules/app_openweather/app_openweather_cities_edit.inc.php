@@ -63,10 +63,28 @@
     if($rec['APIKEY_METHOD']=='forecast_5'){
       if(!$rec['LINKED_OBJECT']) {
         $rec['LINKED_OBJECT']='ow_forecast_'.$rec['ID'];
+      }
+      $class = SQLSelectOne("SELECT ID FROM classes WHERE TITLE = 'ow_forecast'");
+      SQLExec("DELETE FROM pvalues WHERE object_id IN (SELECT ID FROM objects WHERE CLASS_ID='" . $class['ID'] . "' AND TITLE LIKE '".$rec['LINKED_OBJECT']."%')");
+      SQLExec("DELETE FROM properties WHERE object_id IN (SELECT ID FROM objects WHERE CLASS_ID='" . $class['ID'] . "' AND TITLE LIKE '".$rec['LINKED_OBJECT']."%')");
+      SQLExec("DELETE FROM objects WHERE CLASS_ID='" . $class['ID'] . "' AND TITLE LIKE '".$rec['LINKED_OBJECT']."%'");
+
+      addClassObject('ow_forecast', $rec['LINKED_OBJECT']);
+      SQLUpdate($table_name, $rec);
+      $ow_forecast_interval=5;
+      $ow_forecast_interval=$ow_forecast_interval*8;
+      for ($i = 1; $i < $ow_forecast_interval; $i++)
+			{
+        $obj=$rec['LINKED_OBJECT'].'_'.$i;
+        addClassObject('ow_forecast',  $obj);
+			}
+    }
+    if($rec['APIKEY_METHOD']=='forecast_16'){
+      if(!$rec['LINKED_OBJECT']) {
+        $rec['LINKED_OBJECT']='ow_forecast_'.$rec['ID'];
         addClassObject('ow_forecast', $rec['LINKED_OBJECT']);
         SQLUpdate($table_name, $rec);
-        $ow_forecast_interval=5;
-        $ow_forecast_interval=$ow_forecast_interval*8;
+        $ow_forecast_interval=16;
         for ($i = 1; $i < $ow_forecast_interval; $i++)
   			{
           $obj=$rec['LINKED_OBJECT'].'_'.$i;
