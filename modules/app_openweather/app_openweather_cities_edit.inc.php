@@ -92,6 +92,19 @@
   			}
       }
     }
+    if($rec['APIKEY_METHOD']=='forecast_one'){
+      if(!$rec['LINKED_OBJECT']) {
+        $rec['LINKED_OBJECT']='ow_forecast_'.$rec['ID'];
+        addClassObject('ow_forecast', $rec['LINKED_OBJECT']);
+        SQLUpdate($table_name, $rec);
+        $ow_forecast_interval=7;
+        for ($i = 1; $i < $ow_forecast_interval; $i++)
+  			{
+          $obj=$rec['LINKED_OBJECT'].'_'.$i;
+          addClassObject('ow_forecast',  $obj);
+  			}
+      }
+    }
     $out['OK']=1;
    } else {
     $out['ERR']=1;

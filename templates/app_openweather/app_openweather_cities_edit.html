@@ -277,6 +277,8 @@
 		<option value="">--<#LANG_OW_CHOOSE_CITY#>--</option>
        </select>
     </div>
+	<input id="city_lat" name="city_lat" value="[#CITY_LAT#]" type="hidden" class="form-control">
+	<input id="city_lon" name="city_lon" value="[#CITY_LON#]" type="hidden" class="form-control">
  </div>
 
 
@@ -321,17 +323,11 @@
     <option value="forecast_one" [#if APIKEY_METHOD=="forecast_one" #] selected[#endif#]>OneCall Forecast</option>
     <option value="forecast_5" [#if APIKEY_METHOD=="forecast_5" #] selected[#endif#]>5 day / 3 hour Forecast</option>
     <option value="forecast_16" [#if APIKEY_METHOD=="forecast_16" #] selected[#endif#]>16 day / Daily Forecast</option>
-    <option value="weatherstation" [#if APIKEY_METHOD=="weatherstation" #] selected[#endif#]>Weather Station</option>
+    <option value="weatherstation" [#if APIKEY_METHOD=="weatherstation" #] selected[#endif#] disabled>Weather Station</option>
 	</select>
  </div>
 </div>
-<!-- OW_ROUND (varchar) -->
-<!--div class="form-group[#if ERR_OW_ROUND#] has-error[#endif#]">
- <label for="ow_round" class="col-lg-3 control-label">
- <#LANG_OW_ROUND#>:
- </label>
- <div class="col-lg-9"><input id="ow_round" name="ow_round" value="[#OW_ROUND#]" type="text" class="form-control"></div>
-</div>
+
 <!-- OW_INTERVAL (varchar) -->
 <div class="form-group[#if ERR_OW_INTERVAL#] has-error[#endif#]">
  <label for="ow_interval" class="col-lg-3 control-label">
@@ -404,6 +400,8 @@ function country_change() {
 					resp.cities.forEach(function(item, i, arr) {
 						let newOption = new Option(item.name+' ('+item.lat+'|'+item.lon+')', item.id);
 						ow_city.append(newOption);
+						city_lat.value=item.lat;
+						city_lon.value=item.lon;
             if(item.selected) ow_city.selectedIndex=i+1;
 						//console.log(item.name+'|'+item.id);
 					});
