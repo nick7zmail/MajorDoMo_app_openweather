@@ -9,7 +9,7 @@ while($ret<=3) {
     $j = 0;
     foreach($weather->daily as $period) {
       $obj=$cities[$i]['LINKED_OBJECT'];
-      if($i) $obj=$obj.'_'.$j;
+      if($j) $obj=$obj.'_'.$j;
 
       $date = date("d.m.Y (H:i)", $period->dt);
       sg($obj.'.date', $date);
