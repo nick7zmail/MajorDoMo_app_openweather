@@ -1,4 +1,8 @@
-
+<ul class="nav nav-tabs">
+   <li [#if TAB="" #] class="active" [#endif#]><a href="?view_mode=<#VIEW_MODE#>&id=<#ID#>&tab="><span class="glyphicon glyphicon-map-marker"></span> <#LANG_LOCATION#></a></li>
+   <li [#if TAB="on_widgets" #] class="active" [#endif#]><a href="?view_mode=<#VIEW_MODE#>&id=<#ID#>&tab=on_widgets"><span class="glyphicon glyphicon-eye-open"></span> Online widgets</a></li>
+</ul><br>
+[#if TAB=""#]
 <!-- Table 'app_openweather_cities' edit -->
 <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
 [#if OK#]
@@ -375,7 +379,6 @@
 </div>
 </div>
 </fieldset>
-
 <script>
 [#if COUNTRY#]country_change();[#endif#]
 function country_change() {
@@ -428,3 +431,50 @@ function tryParseJSON (jsonString){
 </script>
 
 </form>
+[#endif TAB#]
+[#if TAB="on_widgets"#]
+[#inc widgets/online.widget1.html#]
+<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.1"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget4.html#]
+<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.4"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget5.html#]
+<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.5"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget6.html#]
+<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.6"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget9.html#]
+<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.9"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget11.html#]
+<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.11"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget12.html#]
+<br /><code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.12"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget14.html#]
+<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.14"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget15.html#]
+<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.15"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget16.html#]
+<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.16"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget19.html#]
+<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.19"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget21.html#]
+<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.21"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget22.html#]
+<br /><code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.22"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget23.html#]
+<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.23"#&#093 </b></code><br /><br />
+
+[#inc widgets/online.widget24.html#]
+<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.24"#&#093 </b></code><br /><br />
+[#endif TAB#]

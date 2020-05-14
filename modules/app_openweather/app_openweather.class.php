@@ -43,6 +43,12 @@ function saveParams($data=1) {
  if (IsSet($this->tab)) {
   $p["tab"]=$this->tab;
  }
+ if (IsSet($this->vid)) {
+  $p["vid"]=$this->vid;
+ }
+ if (IsSet($this->widget)) {
+  $p["widget"]=$this->widget;
+ }
  return parent::saveParams($p);
 }
 /**
@@ -58,6 +64,8 @@ function getParams() {
   global $view_mode;
   global $edit_mode;
   global $tab;
+  global $vid;
+  global $widget;
   if (isset($id)) {
    $this->id=$id;
   }
@@ -72,6 +80,12 @@ function getParams() {
   }
   if (isset($tab)) {
    $this->tab=$tab;
+  }
+  if (isset($vid)) {
+   $this->vid=$vid;
+  }
+  if (isset($widget)) {
+   $this->widget=$widget;
   }
 }
 /**
@@ -176,6 +190,17 @@ function usual(&$out) {
 			echo json_encode($result).PHP_EOL;
 		}
 	}
+  $this->getConfig();
+  $id=$this->vid;
+  $table_name='app_openweather_cities';
+  $rec=SQLSelectOne("SELECT * FROM $table_name WHERE ID='$id'");
+  if(stripos($this->widget, 'online')!==false) {
+    $ptn_file=DIR_TEMPLATES.$this->name."/widgets/online/".$this->widget.'.html';
+    $out_arr['APIKEY']=$rec['APIKEY'];
+    $out_arr['CITY_ID']=$rec['CITY_ID'];
+    $p=new parser($ptn_file, $out_arr, $this);
+    $out['HTML_OUT']=$p->result;
+  }
 }
 /**
 * app_openweather_cities search
@@ -260,6 +285,21 @@ function usual(&$out) {
 */
  function install($data='') {
   subscribeToEvent($this->name, 'HOURLY');
+  //======удаляем остатки старого модуля=========
+  $className = 'openweather';
+  $classid = SQLSelectOne("SELECT ID FROM classes WHERE TITLE LIKE '" . DBSafe($className) . "'");
+  if ($classid['ID']) {
+    $obj1_rec = SQLSelectOne("SELECT ID FROM objects WHERE CLASS_ID='" . $classid['ID'] . "' AND TITLE LIKE '" . DBSafe('ow_fact') . "'");
+    $obj2_rec = SQLSelectOne("SELECT ID FROM objects WHERE CLASS_ID='" . $classid['ID'] . "' AND TITLE LIKE '" . DBSafe('ow_setting') . "'");
+    if($obj1_rec['ID'] || $obj2_rec['ID']) {
+      SQLExec("delete from pvalues where property_id in (select id FROM properties where object_id in (select id from objects where class_id = (select id from classes where title = 'openweather')))");
+      SQLExec("delete from properties where object_id in (select id from objects where class_id = (select id from classes where title = 'openweather'))");
+      SQLExec("delete from objects where class_id = (select id from classes where title = 'openweather')");
+      SQLExec("delete from classes where title = 'openweather'");
+    }
+  }
+  //=============================================
+
   addClass('openweather');
   addClass('ow_fact', 'openweather');
   addClass('ow_forecast', 'openweather');
@@ -308,6 +348,7 @@ app_openweather_cities -
  app_openweather_cities: APIKEY_METHOD varchar(255) NOT NULL DEFAULT ''
  app_openweather_cities: OW_ROUND varchar(255) NOT NULL DEFAULT ''
  app_openweather_cities: OW_INTERVAL varchar(255) NOT NULL DEFAULT ''
+ app_openweather_cities: MAIN_CITY varchar(10) NOT NULL DEFAULT ''
  app_openweather_cities: EXCLUDE_PRP varchar(255) NOT NULL DEFAULT ''
  app_openweather_cities: LINKED_OBJECT varchar(100) NOT NULL DEFAULT ''
  app_openweather_cities: LINKED_PROPERTY varchar(100) NOT NULL DEFAULT ''
