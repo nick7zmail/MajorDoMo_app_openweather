@@ -1,6 +1,7 @@
 <ul class="nav nav-tabs">
    <li [#if TAB="" #] class="active" [#endif#]><a href="?view_mode=<#VIEW_MODE#>&id=<#ID#>&tab="><span class="glyphicon glyphicon-map-marker"></span> <#LANG_LOCATION#></a></li>
    <li [#if TAB="on_widgets" #] class="active" [#endif#]><a href="?view_mode=<#VIEW_MODE#>&id=<#ID#>&tab=on_widgets"><span class="glyphicon glyphicon-eye-open"></span> Online widgets</a></li>
+   <li [#if TAB="of_widgets" #] class="active" [#endif#]><a href="?view_mode=<#VIEW_MODE#>&id=<#ID#>&tab=of_widgets"><span class="glyphicon glyphicon-eye-open"></span> Offline widgets</a></li>
 </ul><br>
 [#if TAB=""#]
 <!-- Table 'app_openweather_cities' edit -->
@@ -27,7 +28,7 @@
  <#LANG_LOCATION#>:
  </label>
 
-    <div class="col-sm-4">
+    <div class="col-lg-4 col-sm-12">
       <select name="country" id="country" class="form-control" onchange="country_change();">
   		  <option value="">--<#LANG_OW_CHOOSE_COUNTRY#>--</option>
   		  <option value="AD" [#if COUNTRY="AD"#] selected[#endif#]>Andorra</option>
@@ -275,7 +276,7 @@
   		  <option value="ZW" [#if COUNTRY="ZW"#] selected[#endif#]>Zimbabwe</option>
       </select>
     </div>
-    <div class="col-sm-5">
+    <div class="col-lg-5 col-sm-12">
      <h5 id="ow_label" class="hidden"><img src="/img/ajax-loader.gif" border="0"> Список городов загружается</h5>
        <select name="ow_city_id" id="ow_city" class="form-control hidden">
 		<option value="">--<#LANG_OW_CHOOSE_CITY#>--</option>
@@ -333,14 +334,14 @@
 </div>
 
 <!-- OW_INTERVAL (varchar) -->
-<div class="form-group[#if ERR_OW_INTERVAL#] has-error[#endif#]">
+<div class="form-group[#if ERR_OW_INTERVAL#] has-error[#endif#][#if module_mode!=1#] hidden[#endif#]">
  <label for="ow_interval" class="col-lg-3 control-label">
  <#LANG_OW_UPDATE_PERIOD#>:
  </label>
  <div class="col-lg-9">
   <select class="form-control" name="ow_interval">
 		<option value="0" [#if OW_INTERVAL="0" #] selected[#endif#]>----</option>
-		<option value="1" [#if OW_INTERVAL="1" #] selected[#endif#]><#LANG_OW_UPDATE_PERIOD_1HOUR#></option>
+		<option value="1" [#if OW_INTERVAL="1" || ID=""#] selected[#endif#]><#LANG_OW_UPDATE_PERIOD_1HOUR#></option>
 		<option value="2" [#if OW_INTERVAL="2" #] selected[#endif#]><#LANG_OW_UPDATE_PERIOD_2HOUR#></option>
 		<option value="3" [#if OW_INTERVAL="3" #] selected[#endif#]><#LANG_OW_UPDATE_PERIOD_3HOUR#></option>
 		<option value="4" [#if OW_INTERVAL="4" #] selected[#endif#]><#LANG_OW_UPDATE_PERIOD_4HOUR#></option>
@@ -433,48 +434,15 @@ function tryParseJSON (jsonString){
 </form>
 [#endif TAB#]
 [#if TAB="on_widgets"#]
-[#inc widgets/online/online.widget1.html#]
-<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget1"#&#093 </b></code><br /><br />
+[#begin WIDGETS#]
+  [#HTML_OF_WIDGETS#]
+  [#HTML_OF_CODE#]
+[#end WIDGETS#]
 
-[#inc widgets/online/online.widget4.html#]
-<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget4"#&#093 </b></code><br /><br />
-
-[#inc widgets/online/online.widget5.html#]
-<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget5"#&#093 </b></code><br /><br />
-
-[#inc widgets/online/online.widget6.html#]
-<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget6"#&#093 </b></code><br /><br />
-
-[#inc widgets/online/online.widget9.html#]
-<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget9"#&#093 </b></code><br /><br />
-
-[#inc widgets/online/online.widget11.html#]
-<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget11"#&#093 </b></code><br /><br />
-
-[#inc widgets/online/online.widget12.html#]
-<br /><code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget12"#&#093 </b></code><br /><br />
-
-[#inc widgets/online/online.widget14.html#]
-<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget14"#&#093 </b></code><br /><br />
-
-[#inc widgets/online/online.widget15.html#]
-<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget15"#&#093 </b></code><br /><br />
-
-[#inc widgets/online/online.widget16.html#]
-<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget16"#&#093 </b></code><br /><br />
-
-[#inc widgets/online/online.widget19.html#]
-<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget19"#&#093 </b></code><br /><br />
-
-[#inc widgets/online/online.widget21.html#]
-<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget21"#&#093 </b></code><br /><br />
-
-[#inc widgets/online/online.widget22.html#]
-<br /><code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget22"#&#093 </b></code><br /><br />
-
-[#inc widgets/online/online.widget23.html#]
-<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget23"#&#093 </b></code><br /><br />
-
-[#inc widgets/online/online.widget24.html#]
-<code><b>&#091#module name="app_openweather" vid="[#ID#]" widget="online.widget24"#&#093 </b></code><br /><br />
+[#endif TAB#]
+[#if TAB="of_widgets"#]
+  [#begin WIDGETS#]
+    [#HTML_OF_WIDGETS#]
+    [#HTML_OF_CODE#]
+  [#end WIDGETS#]
 [#endif TAB#]

@@ -201,6 +201,14 @@ function usual(&$out) {
     $p=new parser($ptn_file, $out_arr, $this);
     $out['HTML_OUT']=$p->result;
   }
+  if(stripos($this->widget, 'fact')!==false) {
+    $ptn_file=DIR_TEMPLATES.$this->name."/widgets/".$this->widget.'.html';
+    $out_arr['OBJ']=$rec['LINKED_OBJECT'];
+    $out_arr['ICON']=gg($rec['LINKED_OBJECT'].'.image');
+    $out_arr['W_NAME']=$rec['TITLE'];
+    $p=new parser($ptn_file, $out_arr, $this);
+    $out['HTML_OUT']=$p->result;
+  }
 }
 /**
 * app_openweather_cities search
@@ -318,9 +326,13 @@ function usual(&$out) {
   unsubscribeFromEvent($this->name, 'HOURLY');
   $this->getConfig();
   if($this->config['debug_level']>=2) debmes('[DBG][uninstall] unsubscribed from event HOURLY', 'openweather');
-  SQLExec("delete from pvalues where property_id in (select id FROM properties where object_id in (select id from objects where class_id = (select id from classes where title = 'openweather' or title = 'ow_fact' or title = 'ow_forecast')))");
-  SQLExec("delete from properties where object_id in (select id from objects where class_id = (select id from classes where title = 'openweather' or title = 'ow_fact' or title = 'ow_forecast'))");
-  SQLExec("delete from objects where class_id = (select id from classes where title = 'openweather' or title = 'ow_fact' or title = 'ow_forecast')");
+  SQLExec("delete from pvalues where property_id in (select id FROM properties where object_id in (select id from objects where class_id = (select id from classes where title = 'openweather')))");
+  SQLExec("delete from pvalues where property_id in (select id FROM properties where object_id in (select id from objects where class_id = (select id from classes where title = 'ow_fact')))");
+  SQLExec("delete from pvalues where property_id in (select id FROM properties where object_id in (select id from objects where class_id = (select id from classes where title = 'ow_forecast')))");
+  SQLExec("delete from properties where object_id in (select id from objects where class_id = (select id from classes where title = 'openweather'))");
+  SQLExec("delete from properties where object_id in (select id from objects where class_id = (select id from classes where title = 'ow_fact'))");
+  SQLExec("delete from properties where object_id in (select id from objects where class_id = (select id from classes where title = 'ow_forecast'))");
+  SQLExec("delete from objects where class_id = (select id from classes where title = 'openweather') or class_id = (select id from classes where title = 'ow_fact') or class_id = (select id from classes where title = 'ow_forecast')");
   SQLExec("delete from classes where title = 'openweather' or title = 'ow_fact' or title = 'ow_forecast'");
   parent::uninstall();
  }

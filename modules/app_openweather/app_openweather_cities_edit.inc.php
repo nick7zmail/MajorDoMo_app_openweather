@@ -8,6 +8,45 @@
   $this->getConfig();
   $table_name='app_openweather_cities';
   $rec=SQLSelectOne("SELECT * FROM $table_name WHERE ID='$id'");
+  //онлайн виджеты
+  if($this->tab=='on_widgets') {
+    $widgets=scandir(DIR_TEMPLATES.$this->name."/widgets/online");
+    $i=0;
+    foreach($widgets as $widget) {
+      if($widget=='.' || $widget=='..') continue;
+      $filename=DIR_TEMPLATES.$this->name."/widgets/online/".$widget;
+      $widget_name=preg_replace('/.html/', '', $widget);
+      $out_arr['APIKEY']=$rec['APIKEY'];
+      $out_arr['CITY_ID']=$rec['CITY_ID'];
+
+      $p=new parser($filename, $out_arr, $this);
+      $out['WIDGETS'][$i]['HTML_OF_WIDGETS']=$p->result;
+      $out['WIDGETS'][$i]['HTML_OF_CODE']='<code><b>&#091#module name="app_openweather" vid="'.$id.'" widget="'.  $widget_name.'"#&#093 </b></code><br /><br />';
+      if($widget_name=="online.widget12" || $widget_name=="online.widget22") {
+        $out['WIDGETS'][$i]['HTML_OF_CODE']='<br />'.$out['WIDGETS'][$i]['HTML_OF_CODE'];
+      }
+      $i++;
+    }
+  }
+  //оффлайн виджеты
+  if($this->tab=='of_widgets') {
+    $widgets=scandir(DIR_TEMPLATES.$this->name."/widgets/");
+    $i=0;
+    foreach($widgets as $widget) {
+      if($widget=='.' || $widget=='..' || $widget=='online') continue;
+      $filename=DIR_TEMPLATES.$this->name."/widgets/".$widget;
+      $widget_name=preg_replace('/.html/', '', $widget);
+      $out_arr['OBJ']=$rec['LINKED_OBJECT'];
+      $out_arr['ICON']=gg($rec['LINKED_OBJECT'].'.image');
+      $out_arr['W_NAME']=$rec['TITLE'];
+
+      $p=new parser($filename, $out_arr, $this);
+      $out['WIDGETS'][$i]['HTML_OF_WIDGETS']=$p->result;
+      $out['WIDGETS'][$i]['HTML_OF_CODE']='<code><b>&#091#module name="app_openweather" vid="'.$id.'" widget="'.  $widget_name.'"#&#093 </b></code><br /><br />';
+      $i++;
+    }
+  }
+
   if ($this->mode=='update') {
    $ok=1;
   //updating '<%LANG_TITLE%>' (varchar, required)
@@ -54,7 +93,7 @@
     }
     if($rec['APIKEY_METHOD']=='fact') {
       if(!$rec['LINKED_OBJECT']) {
-        $rec['LINKED_OBJECT']='ow_fact_'+$rec['ID'];
+        $rec['LINKED_OBJECT']='ow_fact_'.$rec['ID'];
         if($rec['ID']==1) $rec['LINKED_OBJECT']='ow_fact';
         addClassObject('ow_fact', $rec['LINKED_OBJECT']);
         SQLUpdate($table_name, $rec);
