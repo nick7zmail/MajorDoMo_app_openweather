@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	* Get wind direction name by direction in degree 
+	* Get wind direction name by direction in degree
 	* @param mixed $degree Wind degree
 	* @return string
 	*/
@@ -31,8 +31,8 @@ function getWindDirection($degree, $full=false)
 			LANG_OW_WIND_FULL_WNW,
 			LANG_OW_WIND_FULL_NW,
 			LANG_OW_WIND_FULL_NNW,
-			LANG_OW_WIND_FULL_N	
-		);		
+			LANG_OW_WIND_FULL_N
+		);
 	} else {
 		$windDirection = array(
 			LANG_N,
@@ -57,11 +57,11 @@ function getWindDirection($degree, $full=false)
     $direction = $windDirection[round(intval($degree) / 22.5)];
     return $direction;
    }
-   
+
    /**
-    * Convert Pressure from one system to another. 
+    * Convert Pressure from one system to another.
     * If error or system not found then function return current pressure.
-    * @param $vPressure 
+    * @param $vPressure
     * @param $vFrom
     * @param $vTo
     * @param $vPrecision
@@ -71,23 +71,23 @@ function ConvertPressure($pressure, $from, $to, $precision = 2)
    {
       if (empty($from) || empty($to) || empty($pressure))
          return $pressure;
-      
+
       if (!is_numeric($pressure))
          return $pressure;
-      
+
       $pressure = (float) $pressure;
       $from     = strtolower($from);
       $to       = strtolower($to);
-      
+
       if ($from == "hpa" && $to == "mmhg")
          return round($pressure * 0.75006375541921, $precision);
-      
+
       if ($from == "mmhg" && $to == "hpa")
          return round($pressure * 1.33322, $precision);
-      
+
       return $pressure;
    }
-   
+
 	/**
 	* Get possibility freeze by evening and day temperature
 	* @param mixed $tempDay      Temperature at 13:00
@@ -121,17 +121,20 @@ function GetFreezePossibility($tempDay, $tempEvening)
 			}
 			return 100;
 		}
-      
+
 	return -1;
 	}
- 
-function GetSunInfo($timeStamp = -1, $cityLat, $cityLong)
+
+function GetSunInfo($timeStamp = -1, $cityLat = 0, $cityLong = 0)
 	{
-		if($timeStamp == '' or $timeStamp == -1) $timeStamp = time();
-		if (!isset($cityLat) || !isset($cityLong)) return FALSE;
-		if(empty($cityLat) || empty($cityLong)) {
-			DebMes('OpenWeather: '.'CityCoords not found');
-			return FALSE;
+		if($timeStamp == '' || $timeStamp == -1) $timeStamp = time();
+		if($cityLat==0 || $cityLong==0) {
+      $cityLat=gg('lat');
+      $cityLong=gg('lon');
+      if($cityLat==0 || $cityLong==0 || empty($cityLat) || empty($cityLong)) {
+  			DebMes('OpenWeather [/lib/app_openweather]: '.'city coordinates corrupted.');
+  			return FALSE;
+      }
 		}
 		$info = date_sun_info($timeStamp, $cityLat, $cityLong);
 		return $info;

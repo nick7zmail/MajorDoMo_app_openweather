@@ -45,21 +45,15 @@ while($ret<=3) {
       if (stripos($cities[$i]['EXCLUDE_PRP'], 'rain')===false)                  sg($obj.'.rain', isset($period->rain) ? $period->rain : 0);
       if (stripos($cities[$i]['EXCLUDE_PRP'], 'snow')===false)                  sg($obj.'.snow', isset($period->snow) ? $period->snow : 0);
 
-      /*$curTimeStamp = strtotime('+' . $i . ' day', time());
-      $sunInfo = GetSunInfo($curTimeStamp);
+      $sunInfo = GetSunInfo($period->dt, $cities[$i]['CITY_LAT'], $cities[$i]['CITY_LON']);
       if ($sunInfo)
       {
-       $sunRise = $sunInfo["sunrise"];
-       $sunSet = $sunInfo["sunset"];
-       $dayLength = $sunSet - $sunRise;
-
-       sg($obj.'.sunrise', $sunRise);
-       sg($obj.'.sunset', $sunSet);
-       sg($obj.'.day_length', $dayLength);
-       sg($obj.'.transit', $sunInfo["transit"]);
-       sg($obj.'.civil_twilight_begin', $sunInfo["civil_twilight_begin"]);
-       sg($obj.'.civil_twilight_end', $sunInfo["civil_twilight_end"]);
-     }*/
+       if (stripos($cities[$i]['EXCLUDE_PRP'], 'sunrise')===false)              sg($obj.'.sunrise', date("H:i", $sunInfo["sunrise"]));
+       if (stripos($cities[$i]['EXCLUDE_PRP'], 'sunset')===false)               sg($obj.'.sunset',  date("H:i", $sunInfo["sunset"]));
+       if (stripos($cities[$i]['EXCLUDE_PRP'], 'day_length')===false)           sg($obj.'.day_length', gmdate("H:i", $sunInfo["sunset"]-$sunInfo["sunrise"]));
+       if (stripos($cities[$i]['EXCLUDE_PRP'], 'civil_twilight_begin')===false) sg($obj.'.civil_twilight_begin', date("H:i", $sunInfo["civil_twilight_begin"]));
+       if (stripos($cities[$i]['EXCLUDE_PRP'], 'civil_twilight_end')===false)   sg($obj.'.civil_twilight_end', date("H:i", $sunInfo["civil_twilight_end"]));
+      }
       $j++;
     }
     break;

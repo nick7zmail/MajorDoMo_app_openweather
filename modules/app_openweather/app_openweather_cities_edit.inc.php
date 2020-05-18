@@ -33,15 +33,43 @@
     $widgets=scandir(DIR_TEMPLATES.$this->name."/widgets/");
     $i=0;
     foreach($widgets as $widget) {
-      if($widget=='.' || $widget=='..' || $widget=='online') continue;
-      $filename=DIR_TEMPLATES.$this->name."/widgets/".$widget;
-      $widget_name=preg_replace('/.html/', '', $widget);
-      $out_arr['OBJ']=$rec['LINKED_OBJECT'];
-      $out_arr['ICON']=gg($rec['LINKED_OBJECT'].'.image');
-      $out_arr['W_NAME']=$rec['TITLE'];
+      if($rec['APIKEY_METHOD']=='fact') {
+
+        if($widget=='.' || $widget=='..' || $widget=='online' || stripos($widget, 'fact')===false) continue;
+        $filename=DIR_TEMPLATES.$this->name."/widgets/".$widget;
+        $widget_name=preg_replace('/.html/', '', $widget);
+
+        $out_arr['OBJ']=$rec['LINKED_OBJECT'];
+        $out_arr['ICON']=gg($rec['LINKED_OBJECT'].'.image');
+        $out_arr['W_NAME']=$rec['TITLE'];
+      } elseif($rec['APIKEY_METHOD']=='forecast_16') {
+
+        if($widget=='.' || $widget=='..' || $widget=='online' || stripos($widget, 'forecast')===false) continue;
+        $filename=DIR_TEMPLATES.$this->name."/widgets/".$widget;
+        $widget_name=preg_replace('/.html/', '', $widget);
+        $out_arr['W_NAME']=$rec['TITLE'];
+        for($j=0; $j<=6; $j++) {
+          $obj=$rec['LINKED_OBJECT'];
+          if($j) $obj=$rec['LINKED_OBJECT'].'_'.$j;
+          $out_arr['FORECAST'][$j]['WEEK_DAY']=date('D', strtotime(preg_replace(array('/\((\d+):(\d+)\)/i'), '', gg($obj.'.date'))));
+          $out_arr['FORECAST'][$j]['OBJ']=$obj;
+          $out_arr['FORECAST'][$j]['ICON']=gg($obj.'.image');
+        }
+      }
+
 
       $p=new parser($filename, $out_arr, $this);
-      $out['WIDGETS'][$i]['HTML_OF_WIDGETS']=$p->result;
+      $result=$p->result;
+
+      //замена $%obj.prop на значения
+      if (preg_match_all('/%(\w{2,}?)\.(\w{2,}?)%/isu', $result, $m)) {
+         $total = count($m[0]);
+         for ($q = 0; $q < $total; $q++) {
+            $result = str_replace($m[0][$q], getGlobal($m[1][$q] . '.' . $m[2][$q]), $result);
+         }
+      }
+
+      $out['WIDGETS'][$i]['HTML_OF_WIDGETS']=$result;
       $out['WIDGETS'][$i]['HTML_OF_CODE']='<code><b>&#091#module name="app_openweather" vid="'.$id.'" widget="'.  $widget_name.'"#&#093 </b></code><br /><br />';
       $i++;
     }

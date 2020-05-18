@@ -1,0 +1,31 @@
+[#if FORECAST#]
+<div class="row">
+   <div class="">
+      <h3><#LANG_OW_FORECAST_FOR_SEVERAL_DAYS#></h3>
+      <div id="daily_list">
+         <table class="table-responsive">
+            <tbody>
+               [#begin FORECAST#]
+               <tr>
+                  <td><span>%[#OBJ#].date%</span><br /><img src="http://openweathermap.org/img/wn/%[#OBJ#].image%@2x.png"></td>
+                  <td style="padding-bottom:1em;">
+                     <ul class="list-unstyled" style="list-style:outside none none;padding-left:0;font-size:14px;">
+                        <li><span class="label label-warning">%[#OBJ#].temp_day%°C </span><span class="label label-default">%[#OBJ#].temp_night%°C </span>&nbsp;<i>%[#OBJ#].weather_type%</i></li>
+                        <li><#LANG_WIND#>: %[#OBJ#].wind_direction_text% %[#OBJ#].wind_speed% <#LANG_M_S#></li>
+                        <li><span><#LANG_OW_WEATHER_OVERCAST#>: %[#OBJ#].clouds%%</span></li>
+                        <li><span><#LANG_PRESSURE#>: %[#OBJ#].pressure_mmhg% <#LANG_MMHG#></span></li>
+                        <li><#LANG_HUMIDITY#>: %[#OBJ#].humidity%%</li>
+                        <li><#LANG_OW_WEATHER_RAIN#>: %[#OBJ#].rain%mm</li>
+                        <li><#LANG_OW_WEATHER_SNOW#>: %[#OBJ#].snow%mm</li>
+                        <li><#LANG_OW_SUNINFO_DAY_SUNRISE_SUNSET#>: %[#OBJ#].sunrise%/%[#OBJ#].sunset%</li>
+                        <li><#LANG_OW_SUNINFO_DAY_LENGTH#>: %[#OBJ#].day_length%</li>
+                     </ul>
+                  </td>
+               </tr>
+               [#end FORECAST#]
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+[#endif FORECAST#]

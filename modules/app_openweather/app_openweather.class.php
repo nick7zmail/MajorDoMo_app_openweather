@@ -209,6 +209,21 @@ function usual(&$out) {
     $p=new parser($ptn_file, $out_arr, $this);
     $out['HTML_OUT']=$p->result;
   }
+  if(stripos($this->widget, 'forecast')!==false) {
+    $ptn_file=DIR_TEMPLATES.$this->name."/widgets/".$this->widget.'.html';
+    for($j=0; $j<=6; $j++) {
+      $obj=$rec['LINKED_OBJECT'];
+      if($j) $obj=$rec['LINKED_OBJECT'].'_'.$j;
+      //$out_arr['FORECAST'][$j]['WEEK_DAY']=date('D', strtotime(preg_replace(array('/\((\d+):(\d+)\)/i'), '', gg($obj.'.date'))));
+      $arr=array(1=>"Пн", 2=>"Вт", 3=>"Ср", 4=>"Чт", 5=>"Пт", 6=>"Сб", 7=>"Вс");
+      $out_arr['FORECAST'][$j]['WEEK_DAY']=$arr[date('N', strtotime(preg_replace(array('/\((\d+):(\d+)\)/i'), '', gg($obj.'.date'))))];
+      $out_arr['FORECAST'][$j]['OBJ']=$obj;
+      $out_arr['FORECAST'][$j]['ICON']=gg($obj.'.image');
+    }
+    $out_arr['W_NAME']=$rec['TITLE'];
+    $p=new parser($ptn_file, $out_arr, $this);
+    $out['HTML_OUT']=$p->result;
+  }
 }
 /**
 * app_openweather_cities search
