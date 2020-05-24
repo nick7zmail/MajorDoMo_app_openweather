@@ -33,7 +33,7 @@
     $widgets=scandir(DIR_TEMPLATES.$this->name."/widgets/");
     $i=0;
     foreach($widgets as $widget) {
-      if($rec['APIKEY_METHOD']=='fact') {
+      if(stripos($rec['APIKEY_METHOD'], 'fact')!==false) {
 
         if($widget=='.' || $widget=='..' || $widget=='online' || stripos($widget, 'fact')===false) continue;
         $filename=DIR_TEMPLATES.$this->name."/widgets/".$widget;
@@ -42,7 +42,7 @@
         $out_arr['OBJ']=$rec['LINKED_OBJECT'];
         $out_arr['ICON']=gg($rec['LINKED_OBJECT'].'.image');
         $out_arr['W_NAME']=$rec['TITLE'];
-      } elseif($rec['APIKEY_METHOD']=='forecast_16') {
+      } elseif(stripos($rec['APIKEY_METHOD'], 'forecast')!==false) {
 
         if($widget=='.' || $widget=='..' || $widget=='online' || stripos($widget, 'forecast')===false) continue;
         $filename=DIR_TEMPLATES.$this->name."/widgets/".$widget;
@@ -96,6 +96,16 @@
     $out['ERR_CITY_ID']=1;
     $ok=0;
    }
+   global $main_city;
+   if(!isset($main_city)) $main_city=0; else $main_city=1;
+   if($rec['MAIN_CITY']!=$main_city) {
+     $rec['MAIN_CITY']=$main_city;
+     sg('ThisComputer.lat', $rec['CITY_LAT']);
+     sg('ThisComputer.lon', $rec['CITY_LON']);
+     $sqlmain=SQLSelectOne("SELECT * FROM $table_name WHERE MAIN_CITY='1'");
+     $sqlmain['MAIN_CITY']=0;
+     SqlUpdate($table_name, $sqlmain);
+   }
   //updating 'CITY_UPDATED' (varchar)
    $rec['CITY_UPDATED']=gr('city_updated');
   //updating 'APIKEY' (varchar)
@@ -119,7 +129,7 @@
      $new_rec=1;
      $rec['ID']=SQLInsert($table_name, $rec); // adding new record
     }
-    if($rec['APIKEY_METHOD']=='fact') {
+    if($rec['APIKEY_METHOD']=='fact' || $rec['APIKEY_METHOD']=='fact_one') {
       if(!$rec['LINKED_OBJECT']) {
         $rec['LINKED_OBJECT']='ow_fact_'.$rec['ID'];
         if($rec['ID']==1) $rec['LINKED_OBJECT']='ow_fact';

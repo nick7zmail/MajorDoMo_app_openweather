@@ -289,6 +289,8 @@ function usual(&$out) {
 
         if($api_method=='fact'){
           require(DIR_MODULES.$this->name.'/app_openweather_get_weather_fact.inc.php');
+        } elseif($api_method=='fact_one') {
+          require(DIR_MODULES.$this->name.'/app_openweather_get_weather_factone.inc.php');
         } elseif($api_method=='forecast_5') {
           require(DIR_MODULES.$this->name.'/app_openweather_get_weather_forecast5.inc.php');
         } elseif($api_method=='forecast_16') {
@@ -314,6 +316,12 @@ function usual(&$out) {
   if ($classid['ID']) {
     $obj1_rec = SQLSelectOne("SELECT ID FROM objects WHERE CLASS_ID='" . $classid['ID'] . "' AND TITLE LIKE '" . DBSafe('ow_fact') . "'");
     $obj2_rec = SQLSelectOne("SELECT ID FROM objects WHERE CLASS_ID='" . $classid['ID'] . "' AND TITLE LIKE '" . DBSafe('ow_setting') . "'");
+    if($obj2_rec['ID']) {
+      say('Внимание, модуль Openweather был обновлён до последней версии. К сожалению нам не удалось сохранить ваши настройки, но это компенсируется тем, что модуль стал гораздо лучше и стабильнее. Пожалуйста создайте записи с местоположением в новом модуле. Напоминаем ващ API-ключ: '.gg('ow_setting.api_key').'.',2);
+      say('Attention, the Openweather module has been updated to the latest version. Unfortunately, we were unable to save your settings, but the module has become much better and more stable. Please create entries in the new module. We remind you of your API key: '.gg (' ow_setting.api_key ').'. ', 2);
+      debmes('Внимание, модуль Openweather был обновлён до последней версии. К сожалению нам не удалось сохранить ваши настройки, но это компенсируется тем, что модуль стал гораздо лучше и стабильнее. Пожалуйста создайте записи с местоположением в новом модуле. Напоминаем ващ API-ключ: '.gg('ow_setting.api_key').'.');
+      debmes('Attention, the Openweather module has been updated to the latest version. Unfortunately, we were unable to save your settings, but the module has become much better and more stable. Please create entries in the new module. We remind you of your API key: '.gg (' ow_setting.api_key ').'. ');
+    }
     if($obj1_rec['ID'] || $obj2_rec['ID']) {
       SQLExec("delete from pvalues where property_id in (select id FROM properties where object_id in (select id from objects where class_id = (select id from classes where title = 'openweather')))");
       SQLExec("delete from properties where object_id in (select id from objects where class_id = (select id from classes where title = 'openweather'))");
@@ -375,6 +383,7 @@ app_openweather_cities -
  app_openweather_cities: APIKEY_METHOD varchar(255) NOT NULL DEFAULT ''
  app_openweather_cities: OW_ROUND varchar(255) NOT NULL DEFAULT ''
  app_openweather_cities: OW_INTERVAL varchar(255) NOT NULL DEFAULT ''
+ app_openweather_cities: OW_FORECAST_DAYS varchar(255) NOT NULL DEFAULT ''
  app_openweather_cities: MAIN_CITY varchar(10) NOT NULL DEFAULT ''
  app_openweather_cities: EXCLUDE_PRP varchar(255) NOT NULL DEFAULT ''
  app_openweather_cities: LINKED_OBJECT varchar(100) NOT NULL DEFAULT ''

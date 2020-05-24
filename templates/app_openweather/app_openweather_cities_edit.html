@@ -1,7 +1,9 @@
 <ul class="nav nav-tabs">
    <li [#if TAB="" #] class="active" [#endif#]><a href="?view_mode=<#VIEW_MODE#>&id=<#ID#>&tab="><span class="glyphicon glyphicon-map-marker"></span> <#LANG_LOCATION#></a></li>
+   [#if ID!=""#]
    <li [#if TAB="on_widgets" #] class="active" [#endif#]><a href="?view_mode=<#VIEW_MODE#>&id=<#ID#>&tab=on_widgets"><span class="glyphicon glyphicon-eye-open"></span> Online widgets</a></li>
    <li [#if TAB="of_widgets" #] class="active" [#endif#]><a href="?view_mode=<#VIEW_MODE#>&id=<#ID#>&tab=of_widgets"><span class="glyphicon glyphicon-eye-open"></span> Offline widgets</a></li>
+   [#endif ID#]
 </ul><br>
 [#if TAB=""#]
 <!-- Table 'app_openweather_cities' edit -->
@@ -293,22 +295,15 @@
  CITY_NAME:
  </label>
  <div class="col-lg-9"><input id="city_name" name="city_name" value="[#CITY_NAME#]" type="text" class="form-control"></div>
-</div>
-<!-- CITY_LAT (varchar) -->
-<!--div class="form-group[#if ERR_CITY_LAT#] has-error[#endif#]">
- <label for="city_lat" class="col-lg-3 control-label">
- CITY_LAT:
- </label>
- <div class="col-lg-9"><input id="city_lat" name="city_lat" value="[#CITY_LAT#]" type="text" class="form-control"></div>
-</div>
-<!-- CITY_LON (varchar) -->
-<!--div class="form-group[#if ERR_CITY_LON#] has-error[#endif#]">
- <label for="city_lon" class="col-lg-3 control-label">
- CITY_LON:
- </label>
- <div class="col-lg-9"><input id="city_lon" name="city_lon" value="[#CITY_LON#]" type="text" class="form-control"></div>
-</div>
+</div-->
 
+
+<div class="form-group hidden" id="main_city">
+   <label class="col-lg-3 control-label">Main City:</label>
+   <div class="col-lg-9">
+  <input type="checkbox" class="form-control" name="main_city" [#if MAIN_CITY==1 #] checked[#else#] [#endif#]/>
+   </div>
+</div>
 
 <!-- APIKEY (varchar) -->
 <div class="form-group[#if ERR_APIKEY#] has-error[#endif#]">
@@ -323,16 +318,26 @@
  <#LANG_OW_API_METHOD#>:
  </label>
  <div class="col-lg-9">
-   <select class="form-control" name="apikey_method">
-		<option value="fact" [#if APIKEY_METHOD=="fact" #] selected[#endif#]>Fact</option>
-    <option value="forecast_one" [#if APIKEY_METHOD=="forecast_one" #] selected[#endif#]>OneCall Forecast</option>
-    <option value="forecast_5" [#if APIKEY_METHOD=="forecast_5" #] selected[#endif#]>5 day / 3 hour Forecast</option>
-    <option value="forecast_16" [#if APIKEY_METHOD=="forecast_16" #] selected[#endif#]>16 day / Daily Forecast</option>
-    <option value="weatherstation" [#if APIKEY_METHOD=="weatherstation" #] selected[#endif#] disabled>Weather Station</option>
+   <select class="form-control" name="apikey_method" id="apikey_method" onclick="api_change(this.value);">
+		<option value="fact" [#if APIKEY_METHOD=="fact" #] selected[#endif#] [#if module_mode!=1#] hidden[#endif#]>Fact</option>
+    <option value="fact_one" [#if APIKEY_METHOD=="fact_one" #] selected[#endif#]>[#if module_mode!=1#]OneCall [#endif#]Fact</option>
+    <option value="forecast_one" [#if APIKEY_METHOD=="forecast_one" #] selected[#endif#]>[#if module_mode!=1#]OneCall [#endif#]Forecast</option>
+    <option value="forecast_5" [#if APIKEY_METHOD=="forecast_5" #] selected[#endif#][#if module_mode!=1#] hidden[#endif#]>5 day / 3 hour Forecast</option>
+    <option value="forecast_16" [#if APIKEY_METHOD=="forecast_16" #] selected[#endif#][#if module_mode!=1#] hidden[#endif#]>16 day / Daily Forecast</option>
+    <option value="weatherstation" [#if APIKEY_METHOD=="weatherstation" #] selected[#endif#] disabled[#if module_mode!=1#] hidden[#endif#]>Weather Station</option>
 	</select>
  </div>
 </div>
 
+<div class="form-group[#if ERR_OW_FORECAST_DAYS#] has-error[#endif#][#if module_mode!=1#] hidden[#endif#]">
+ <label for="ow_forecast_days" class="col-lg-3 control-label">
+ <#LANG_OW_FORECAST_DAYS#>:
+ </label>
+  <div class="col-lg-9">
+    <select class="form-control" name="ow_forecast_days" id="ow_forecast_days">
+    </select>
+  </div>
+</div>
 <!-- OW_INTERVAL (varchar) -->
 <div class="form-group[#if ERR_OW_INTERVAL#] has-error[#endif#][#if module_mode!=1#] hidden[#endif#]">
  <label for="ow_interval" class="col-lg-3 control-label">
@@ -382,6 +387,7 @@
 </fieldset>
 <script>
 [#if COUNTRY#]country_change();[#endif#]
+[#if APIKEY_METHOD#]api_change(apikey_method.value);[#endif#]
 function country_change() {
 
 		var element = document.getElementById("ow_city");
@@ -420,7 +426,29 @@ function country_change() {
     });
 
 }
-
+function api_change(api_method) {
+  ow_forecast_days.options.length = 0;
+  var days_num;
+  switch(api_method) {
+    case 'forecast_one':
+      days_num=7;
+      break;
+    case 'forecast_5':
+      days_num=5;
+      break;
+    case 'forecast_16' :
+      days_num=16;
+      break;
+    default:
+      days_num=0;
+  }
+  for (var i = 1; i <= days_num; i++) {
+    let newOption = new Option(i+' days', i);
+    ow_forecast_days.append(newOption);
+  }
+[#if OW_FORECAST_DAYS#]ow_forecast_days.selectedIndex=[#OW_FORECAST_DAYS#]-1;[#else#]ow_forecast_days.selectedIndex=days_num-1;[#endif#]
+  if(api_method=='fact' || api_method=='fact_one') main_city.classList.remove("hidden"); else main_city.classList.add("hidden");
+}
 function tryParseJSON (jsonString){
   try {
      var o = JSON.parse(jsonString);
@@ -429,6 +457,7 @@ function tryParseJSON (jsonString){
   catch (e) { }
   return false;
 };
+
 </script>
 
 </form>

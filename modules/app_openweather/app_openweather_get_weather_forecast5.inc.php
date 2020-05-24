@@ -35,8 +35,6 @@ while($ret<=3) {
       if (stripos($cities[$i]['EXCLUDE_PRP'], 'clouds')===false)                sg($obj.'.clouds', $period->clouds->all);
       if (stripos($cities[$i]['EXCLUDE_PRP'], 'rain')===false)                  sg($obj.'.rain', isset($period->rain->{'3h'}) ? $period->rain->{'3h'} : 0);
       if (stripos($cities[$i]['EXCLUDE_PRP'], 'snow')===false)                  sg($obj.'.snow', isset($period->snow->{'3h'}) ? $period->snow->{'3h'} : 0);
-
-
       /*$sunInfo = GetSunInfo($period->dt, $cities[$i]['CITY_LAT'], $cities[$i]['CITY_LON']);
       if ($sunInfo)
       {
@@ -49,6 +47,9 @@ while($ret<=3) {
      }*/
       $j++;
     }
+    if ($cities[$i]['MAIN_CITY']) {
+      if($this->config['debug_level']>=1) debmes('[ERR] [settings]: main city cant be "forecast" api type. Change main city settings on "fact" api type.', 'openweather');
+    }    
     break;
   } else {
     if($this->config['debug_level']>=1) debmes('[ERR] '.$weather->cod.': '.$weather->message, 'openweather');

@@ -27,10 +27,10 @@ while($ret<=3) {
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'image')===false)               sg($obj.'.image', $curWeather->weather[0]->icon);
     //clouds, snow, rain
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'clouds')===false)              sg($obj.'.clouds', $curWeather->clouds->all);
-    if (stripos($cities[$i]['EXCLUDE_PRP'], 'rain1h')===false)              sg($obj.'.rain', isset($curWeather->rain->{'1h'}) ? $curWeather->rain->{'1h'} : '');
-    if (stripos($cities[$i]['EXCLUDE_PRP'], 'rain3h')===false)              sg($obj.'.rain', isset($curWeather->rain->{'3h'}) ? $curWeather->rain->{'3h'} : '');
-    if (stripos($cities[$i]['EXCLUDE_PRP'], 'snow1h')===false)              sg($obj.'.rain', isset($curWeather->snow->{'1h'}) ? $curWeather->snow->{'1h'} : '');
-    if (stripos($cities[$i]['EXCLUDE_PRP'], 'snow3h')===false)              sg($obj.'.rain', isset($curWeather->snow->{'3h'}) ? $curWeather->snow->{'3h'} : '');
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'rain1h')===false)              sg($obj.'.rain1h', isset($curWeather->rain->{'1h'}) ? $curWeather->rain->{'1h'} : '');
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'rain3h')===false)              sg($obj.'.rain3h', isset($curWeather->rain->{'3h'}) ? $curWeather->rain->{'3h'} : '');
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'snow1h')===false)              sg($obj.'.snow1h', isset($curWeather->snow->{'1h'}) ? $curWeather->snow->{'1h'} : '');
+    if (stripos($cities[$i]['EXCLUDE_PRP'], 'snow3h')===false)              sg($obj.'.snow3h', isset($curWeather->snow->{'3h'}) ? $curWeather->snow->{'3h'} : '');
     if (stripos($cities[$i]['EXCLUDE_PRP'], 'data_update')===false)         sg($obj.'.data_update', $date);
     //system
     //if (stripos($cities[$i]['EXCLUDE_PRP'], 'sunrise')===false)             sg($obj.'.sunrise', $curWeather->sys->sunrise);
@@ -45,6 +45,10 @@ while($ret<=3) {
      //if (stripos($cities[$i]['EXCLUDE_PRP'], 'transit')===false)            sg($obj.'.transit', $sunInfo["transit"]);
      if (stripos($cities[$i]['EXCLUDE_PRP'], 'civil_twilight_begin')===false) sg($obj.'.civil_twilight_begin', date("H:i", $sunInfo["civil_twilight_begin"]));
      if (stripos($cities[$i]['EXCLUDE_PRP'], 'civil_twilight_end')===false) sg($obj.'.civil_twilight_end', date("H:i", $sunInfo["civil_twilight_end"]));
+     if ($cities[$i]['MAIN_CITY']) {
+       sg('ThisComputer.SunRiseTime', date("H:i", $sunInfo["sunrise"]));
+       sg('ThisComputer.SunSetTime', date("H:i", $sunInfo["sunrise"]));
+     }
    }
     break;
   } else {
