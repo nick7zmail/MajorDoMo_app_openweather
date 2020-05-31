@@ -321,7 +321,7 @@
    <select class="form-control" name="apikey_method" id="apikey_method" onclick="api_change(this.value);">
 		<option value="fact" [#if APIKEY_METHOD=="fact" #] selected[#endif#] [#if module_mode!=1#] hidden[#endif#]>Fact</option>
     <option value="fact_one" [#if APIKEY_METHOD=="fact_one" #] selected[#endif#]>[#if module_mode=1#]OneCall [#endif module_mode#]Fact</option>
-    <option value="forecast_one" [#if APIKEY_METHOD=="forecast_one" #] selected[#endif#]>[#if module_mode=1 module_mode#]OneCall [#endif#]Forecast</option>
+    <option value="forecast_one" [#if APIKEY_METHOD=="forecast_one" #] selected[#endif#]>[#if module_mode=1#]OneCall [#endif module_mode#]Forecast</option>
     <option value="forecast_5" [#if APIKEY_METHOD=="forecast_5" #] selected[#endif#][#if module_mode!=1#] hidden[#endif#]>5 day / 3 hour Forecast</option>
     <option value="forecast_16" [#if APIKEY_METHOD=="forecast_16" #] selected[#endif#][#if module_mode!=1#] hidden[#endif#]>16 day / Daily Forecast</option>
     <option value="weatherstation" [#if APIKEY_METHOD=="weatherstation" #] selected[#endif#] disabled[#if module_mode!=1#] hidden[#endif#]>Weather Station</option>
