@@ -47,7 +47,7 @@ while($ret<=3) {
      if (stripos($cities[$i]['EXCLUDE_PRP'], 'civil_twilight_end')===false) sg($obj.'.civil_twilight_end', date("H:i", $sunInfo["civil_twilight_end"]));
      if ($cities[$i]['MAIN_CITY']) {
        sg('ThisComputer.SunRiseTime', date("H:i", $sunInfo["sunrise"]));
-       sg('ThisComputer.SunSetTime', date("H:i", $sunInfo["sunrise"]));
+       sg('ThisComputer.SunSetTime', date("H:i", $sunInfo["sunset"]));
      }
    }
     break;
