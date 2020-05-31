@@ -320,7 +320,7 @@ function usual(&$out) {
       say('Внимание, модуль Openweather был обновлён до последней версии. К сожалению нам не удалось сохранить ваши настройки, но это компенсируется тем, что модуль стал гораздо лучше и стабильнее.',2);
       say('Пожалуйста создайте записи с местоположением в новом модуле. Напоминаем ваш API-ключ: '.gg('ow_setting.api_key').'.',2);
       say('Attention, the Openweather module has been updated to the latest version. Unfortunately, we were unable to save your settings, but the module has become much better and more stable.', 2);
-      say('Please create entries in the new module. We remind you of your API key: '.gg (' ow_setting.api_key ').'. ', 2);
+      say('Please create entries in the new module. We remind you of your API key: '.gg('ow_setting.api_key').'.', 2);
       debmes('Внимание, модуль Openweather был обновлён до последней версии. К сожалению нам не удалось сохранить ваши настройки, но это компенсируется тем, что модуль стал гораздо лучше и стабильнее. Пожалуйста создайте записи с местоположением в новом модуле. Напоминаем ващ API-ключ: '.gg('ow_setting.api_key').'.');
       debmes('Attention, the Openweather module has been updated to the latest version. Unfortunately, we were unable to save your settings, but the module has become much better and more stable. Please create entries in the new module. We remind you of your API key: '.gg (' ow_setting.api_key ').'. ');
     }
