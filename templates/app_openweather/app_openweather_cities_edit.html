@@ -280,8 +280,8 @@
     </div>
     <div class="col-lg-5 col-sm-12">
      <h5 id="ow_label" class="hidden"><img src="/img/ajax-loader.gif" border="0"> Список городов загружается</h5>
-       <select name="ow_city_id" id="ow_city" class="form-control hidden">
-		<option value="">--<#LANG_OW_CHOOSE_CITY#>--</option>
+       <select name="ow_city_id" id="ow_city" class="form-control hidden" onchange="cityChange(this.selectedOptions[0].text);">
+		       <option value="">--<#LANG_OW_CHOOSE_CITY#>--</option>
        </select>
     </div>
 	<input id="city_lat" name="city_lat" value="[#CITY_LAT#]" type="hidden" class="form-control">
@@ -410,8 +410,6 @@ function country_change() {
 					resp.cities.forEach(function(item, i, arr) {
 						let newOption = new Option(item.name+' ('+item.lat+'|'+item.lon+')', item.id);
 						ow_city.append(newOption);
-						city_lat.value=item.lat;
-						city_lon.value=item.lon;
             if(item.selected) ow_city.selectedIndex=i+1;
 						//console.log(item.name+'|'+item.id);
 					});
@@ -457,7 +455,13 @@ function tryParseJSON (jsonString){
   catch (e) { }
   return false;
 };
-
+function cityChange(text) {
+  var coords = text.split("(");
+  coords = coords[1].split(")");
+  coords = coords[0].split("|");
+  city_lat.value=coords[0];
+  city_lon.value=coords[1];
+}
 </script>
 
 </form>
