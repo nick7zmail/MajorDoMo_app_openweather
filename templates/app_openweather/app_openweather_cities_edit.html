@@ -397,7 +397,7 @@ function country_change() {
 		element.classList.remove("hidden");
 
 	var country=document.getElementById("country").value;
-	var url="/ajax/app_openweather.html?op=country_change&cname="+country[#if CITY_ID#]+"&cityid=[#CITY_ID#]"[#endif#];
+	var url=ROOTHTML+"/ajax/app_openweather.html?op=country_change&cname="+country[#if CITY_ID#]+"&cityid=[#CITY_ID#]"[#endif#];
 	$.ajax({
 		url: url,
 		cache: false,
